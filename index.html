@@ -173,6 +173,11 @@
             to { opacity: 1; }
         }
 
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .container {
             max-width: 100%;
             padding: 15px;
@@ -242,7 +247,7 @@
         }
 
         .form-group input,
-        .form-group textarea {
+        .form-group select {
             width: 100%;
             padding: 10px 12px;
             border: 2px solid var(--border);
@@ -255,7 +260,7 @@
         }
 
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group select:focus {
             outline: none;
             border-color: var(--green);
             box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.1);
@@ -320,13 +325,13 @@
             color: white;
         }
 
-        .btn-danger {
-            background: var(--red);
+        .btn-warning {
+            background: var(--orange);
             color: white;
         }
 
-        .btn-warning {
-            background: var(--orange);
+        .btn-danger {
+            background: var(--red);
             color: white;
         }
 
@@ -572,7 +577,7 @@
             opacity: 0.6;
         }
 
-        /* QR CODE STYLES */
+        /* QR CODE */
         .qr-payment-container {
             background: var(--card);
             border-radius: 10px;
@@ -626,7 +631,7 @@
             border-radius: 6px;
         }
 
-        /* MODAL STYLES */
+        /* MODAL */
         .modal {
             display: none;
             position: fixed;
@@ -673,7 +678,7 @@
             opacity: 0.6;
         }
 
-        /* ALERT STYLES */
+        /* ALERT */
         .alert {
             padding: 10px;
             border-radius: 8px;
@@ -681,11 +686,6 @@
             font-size: 12px;
             border-left: 4px solid;
             animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .alert-error {
@@ -712,7 +712,7 @@
             color: var(--orange);
         }
 
-        /* TOAST STYLES */
+        /* TOAST */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -744,7 +744,7 @@
             background: var(--turquoise);
         }
 
-        /* DOCUMENT STYLES */
+        /* DOCUMENT */
         .document-item {
             background: var(--card);
             border-radius: 8px;
@@ -837,7 +837,7 @@
             font-size: 12px;
         }
 
-        /* SEARCH BOX */
+        /* SEARCH */
         .search-box {
             width: 100%;
             padding: 8px 12px;
@@ -874,7 +874,7 @@
             color: var(--turquoise);
         }
 
-        /* UTILITIES */
+        /* UTILITY */
         .text-center {
             text-align: center;
         }
@@ -889,17 +889,11 @@
         .mb-10 { margin-bottom: 10px; }
         .mb-15 { margin-bottom: 15px; }
         .mb-20 { margin-bottom: 20px; }
-        .p-10 { padding: 10px; }
-        .p-15 { padding: 15px; }
 
         /* RESPONSIVE */
         @media (max-width: 480px) {
             .auth-box {
                 padding: 20px;
-            }
-
-            .stat-card {
-                font-size: 13px;
             }
 
             .qr-code-display canvas {
@@ -924,7 +918,7 @@
         <nav class="navbar" id="navbar">
             <div class="navbar-brand">
                 <div class="navbar-logo">BD</div>
-                <span id="navbar-title">BENIN DOSSIER</span>
+                <span>BENIN DOSSIER</span>
             </div>
             <div class="navbar-actions">
                 <button class="theme-toggle" onclick="APP.toggleTheme()" title="Thème" id="theme-btn">🌙</button>
@@ -940,7 +934,7 @@
                     <div class="auth-header">
                         <div class="auth-logo-display">BD</div>
                         <h1 class="auth-title">BENIN DOSSIER</h1>
-                        <p class="auth-subtitle">🔐 Plateforme de Gestion Documentaire</p>
+                        <p class="auth-subtitle">Plateforme de Gestion Documentaire</p>
                     </div>
 
                     <div id="login-error" class="alert alert-error hidden"></div>
@@ -950,7 +944,6 @@
                         <button class="tab-btn" onclick="APP.switchTab('phone')">📱 Tél</button>
                     </div>
 
-                    <!-- EMAIL LOGIN -->
                     <form id="email-login-form" onsubmit="APP.handleLogin(event, 'email')">
                         <div class="form-group">
                             <label>Email</label>
@@ -967,11 +960,10 @@
                         <button type="submit" class="btn btn-primary btn-block">🔓 Connexion</button>
                     </form>
 
-                    <!-- PHONE LOGIN -->
                     <form id="phone-login-form" onsubmit="APP.handleLogin(event, 'phone')" style="display: none;">
                         <div class="form-group">
                             <label>Téléphone</label>
-                            <input type="tel" id="phone-login-input" placeholder="+229 90 80 80 80" required>
+                            <input type="tel" id="phone-login-input" placeholder="+229 XX XX XX XX" required>
                             <div class="error-message"></div>
                         </div>
 
@@ -988,11 +980,6 @@
 
                     <div class="form-link">
                         Pas de compte? <a onclick="APP.goToRegister()">S'inscrire</a>
-                    </div>
-
-                    <div style="text-align: center; margin-top: 12px; padding: 10px; background: rgba(0,166,81,0.05); border-radius: 6px; font-size: 10px;">
-                        <strong>📧 Démo:</strong> demo@benin.bj<br>
-                        <strong>🔑</strong> demo123
                     </div>
                 </div>
             </div>
@@ -1029,7 +1016,7 @@
 
                         <div class="form-group">
                             <label>Téléphone</label>
-                            <input type="tel" id="reg-phone" placeholder="+229 90 80 80 80" required>
+                            <input type="tel" id="reg-phone" placeholder="+229 XX XX XX XX" required>
                             <div class="error-message"></div>
                         </div>
 
@@ -1050,7 +1037,7 @@
                             <label for="reg-agree">J'accepte les conditions</label>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block">✍️ S'inscrire</button>
+                        <button type="submit" class="btn btn-primary btn-block mt-15">✍️ S'inscrire</button>
                     </form>
 
                     <div class="divider">─ ou ─</div>
@@ -1061,7 +1048,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 3: SECTORS SELECTION -->
+            <!-- PAGE 3: SECTORS -->
             <div id="sectors-page" class="page dashboard-page" style="display: none;">
                 <div class="dashboard-header">
                     <h2 class="dashboard-title">📊 30+ Secteurs</h2>
@@ -1074,7 +1061,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 4: MAIN DASHBOARD -->
+            <!-- PAGE 4: DASHBOARD -->
             <div id="dashboard-page" class="page dashboard-page" style="display: none;">
                 <div class="dashboard-header">
                     <h2 class="dashboard-title" id="dashboard-title">📂 Tableau de bord</h2>
@@ -1141,7 +1128,7 @@
         </main>
     </div>
 
-    <!-- PAYMENT MODAL -->
+    <!-- MODALS -->
     <div id="payment-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1152,7 +1139,6 @@
         </div>
     </div>
 
-    <!-- VALIDATION MODAL -->
     <div id="validation-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1167,7 +1153,6 @@
         'use strict';
 
         const APP = {
-            // CONFIG
             CONFIG: {
                 contact_email: 'dessouassianael51@gmail.com',
                 payment_number: '0162552778',
@@ -1250,40 +1235,56 @@
 
             // DATABASE
             db: {
-                getUser() {
-                    const data = localStorage.getItem('bd_user');
+                getAllUsers() {
+                    const data = localStorage.getItem('bd_users');
+                    return data ? JSON.parse(data) : [];
+                },
+
+                findUser(email, phone) {
+                    const users = this.getAllUsers();
+                    return users.find(u => u.email === email || u.phone === phone);
+                },
+
+                createUser(user) {
+                    const users = this.getAllUsers();
+                    users.push({
+                        ...user,
+                        id: 'user_' + Date.now(),
+                        createdAt: new Date().toISOString()
+                    });
+                    localStorage.setItem('bd_users', JSON.stringify(users));
+                    return user;
+                },
+
+                setCurrentUser(user) {
+                    localStorage.setItem('bd_current_user', JSON.stringify(user));
+                },
+
+                getCurrentUser() {
+                    const data = localStorage.getItem('bd_current_user');
                     return data ? JSON.parse(data) : null;
                 },
 
-                setUser(user) {
-                    localStorage.setItem('bd_user', JSON.stringify({
-                        ...user,
-                        updatedAt: new Date().toISOString()
-                    }));
-                },
-
-                getSector() {
-                    return localStorage.getItem('bd_sector');
+                updateUser(user) {
+                    const users = this.getAllUsers();
+                    const index = users.findIndex(u => u.email === user.email);
+                    if (index !== -1) {
+                        users[index] = user;
+                        localStorage.setItem('bd_users', JSON.stringify(users));
+                    }
+                    this.setCurrentUser(user);
                 },
 
                 setSector(sector) {
                     localStorage.setItem('bd_sector', sector);
                 },
 
-                getSubscription() {
-                    return this.getUser()?.subscription || 'free';
-                },
-
-                setSubscription(sub) {
-                    const user = this.getUser();
-                    if (user) {
-                        user.subscription = sub;
-                        this.setUser(user);
-                    }
+                getSector() {
+                    return localStorage.getItem('bd_sector');
                 },
 
                 getDocuments() {
-                    const data = localStorage.getItem('bd_docs');
+                    const data = localStorage.getItem('bd_documents');
                     return data ? JSON.parse(data) : [];
                 },
 
@@ -1294,29 +1295,18 @@
                         id: 'doc_' + Date.now(),
                         date: new Date().toISOString()
                     });
-                    localStorage.setItem('bd_docs', JSON.stringify(docs));
+                    localStorage.setItem('bd_documents', JSON.stringify(docs));
                 },
 
                 deleteDocument(id) {
                     let docs = this.getDocuments();
                     docs = docs.filter(d => d.id !== id);
-                    localStorage.setItem('bd_docs', JSON.stringify(docs));
-                },
-
-                getValidationCode() {
-                    return this.getUser()?.validationCode;
-                },
-
-                setValidationCode(code) {
-                    const user = this.getUser();
-                    if (user) {
-                        user.validationCode = code;
-                        this.setUser(user);
-                    }
+                    localStorage.setItem('bd_documents', JSON.stringify(docs));
                 },
 
                 clear() {
-                    localStorage.clear();
+                    localStorage.removeItem('bd_current_user');
+                    sessionStorage.clear();
                 }
             },
 
@@ -1410,14 +1400,12 @@
                     return;
                 }
 
-                const user = this.db.getUser();
+                const user = this.db.findUser(email, phone);
 
-                if (user &&
-                    ((method === 'email' && user.email === email) || (method === 'phone' && user.phone === phone)) &&
-                    user.password === password) {
-
-                    user.lastLogin = new Date().toISOString();
-                    this.db.setUser(user);
+                if (user && user.password === password) {
+                    const token = 'token_' + Date.now();
+                    user.token = token;
+                    this.db.setCurrentUser(user);
 
                     document.getElementById('email-login-form').reset();
                     document.getElementById('phone-login-form').reset();
@@ -1441,6 +1429,7 @@
                 const confirm = document.getElementById('reg-confirm').value;
                 const agree = document.getElementById('reg-agree').checked;
 
+                // Validation
                 if (!firstName || !lastName) {
                     this.showError(document.getElementById('reg-firstname'), 'Nom complet requis');
                     return;
@@ -1471,44 +1460,43 @@
                     return;
                 }
 
-                const user = this.db.getUser();
-                if (user) {
-                    this.showAlert('register-error', '❌ Utilisateur existe déjà');
+                // Check if user exists
+                if (this.db.findUser(email, phone)) {
+                    this.showAlert('register-error', '❌ Email ou téléphone déjà utilisé');
                     return;
                 }
 
+                // Create user
                 const newUser = {
-                    id: 'user_' + Date.now(),
                     firstName,
                     lastName,
                     email,
                     phone,
                     password,
-                    subscription: 'free',
-                    createdAt: new Date().toISOString()
+                    subscription: 'free'
                 };
 
-                this.db.setUser(newUser);
+                this.db.createUser(newUser);
                 document.getElementById('register-form').reset();
 
-                this.showToast('✅ Inscription réussie!', 'success');
-                setTimeout(() => this.goToLogin(), 600);
+                this.showToast('✅ Inscription réussie! Connectez-vous.', 'success');
+                setTimeout(() => this.goToLogin(), 1000);
             },
 
             handleLogout() {
-                if (confirm('Êtes-vous sûr de vouloir vous déconnecter?')) {
+                if (confirm('Êtes-vous sûr?')) {
                     this.db.clear();
                     document.getElementById('logout-btn').classList.add('hidden');
                     this.showToast('👋 Déconnecté', 'info');
-                    this.goToLogin();
+                    this.switchPage('login');
                 }
             },
 
             // SECTORS
             loadSectors() {
-                const user = this.db.getUser();
+                const user = this.db.getCurrentUser();
                 if (!user) {
-                    this.goToLogin();
+                    this.switchPage('login');
                     return;
                 }
 
@@ -1531,18 +1519,14 @@
                     sector.name.toLowerCase().includes(search)
                 );
 
-                if (filtered.length === 0) {
-                    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 15px; opacity: 0.6;">Aucun résultat</p>';
-                    return;
-                }
-
-                grid.innerHTML = filtered.map(([key, sector]) => `
-                    <div class="sector-card" onclick="APP.selectSector('${key}')">
-                        <div class="sector-icon">${sector.name.split(' ')[0]}</div>
-                        <div class="sector-name">${sector.name}</div>
-                        <div class="sector-templates">${sector.templates} docs</div>
-                    </div>
-                `).join('');
+                grid.innerHTML = filtered.length > 0 ? filtered
+                    .map(([key, sector]) => `
+                        <div class="sector-card" onclick="APP.selectSector('${key}')">
+                            <div class="sector-icon">${sector.name.split(' ')[0]}</div>
+                            <div class="sector-name">${sector.name}</div>
+                            <div class="sector-templates">${sector.templates} docs</div>
+                        </div>
+                    `).join('') : '<p style="grid-column: 1/-1; text-align: center; padding: 20px; opacity: 0.6;">Aucun résultat</p>';
             },
 
             selectSector(key) {
@@ -1553,19 +1537,19 @@
 
             // DASHBOARD
             loadDashboard() {
-                const user = this.db.getUser();
+                const user = this.db.getCurrentUser();
                 const sector = this.db.getSector();
                 const docs = this.db.getDocuments();
-                const sub = this.SUBSCRIPTIONS[this.db.getSubscription()];
+                const sub = this.SUBSCRIPTIONS[user.subscription];
 
                 if (!user || !sector) {
-                    this.goToLogin();
+                    this.switchPage('login');
                     return;
                 }
 
                 const sectorData = this.SECTORS[sector];
 
-                document.getElementById('dashboard-title').textContent = `${sectorData.name} - Tableau`;
+                document.getElementById('dashboard-title').textContent = `${sectorData.name}`;
                 document.getElementById('dashboard-subtitle').textContent = `Bienvenue ${user.firstName}!`;
                 document.getElementById('stat-docs').textContent = docs.length;
 
@@ -1578,7 +1562,7 @@
                 if (docs.length >= sub.docLimit) {
                     alerts.innerHTML = `
                         <div class="alert alert-warning">
-                            ⚠️ Limite ${sub.docLimit} docs atteinte. <a onclick="APP.switchPage('subscriptions')" style="text-decoration: underline; cursor: pointer;">Upgrade</a>
+                            ⚠️ Limite ${sub.docLimit} docs. <a onclick="APP.switchPage('subscriptions')" style="text-decoration: underline; cursor: pointer; font-weight: 600;">Upgrade</a>
                         </div>
                     `;
                 }
@@ -1589,7 +1573,8 @@
                 const file = e.target.files[0];
                 if (!file) return;
 
-                const sub = this.SUBSCRIPTIONS[this.db.getSubscription()];
+                const user = this.db.getCurrentUser();
+                const sub = this.SUBSCRIPTIONS[user.subscription];
                 const docs = this.db.getDocuments();
 
                 if (docs.length >= sub.docLimit) {
@@ -1620,7 +1605,7 @@
                 const list = document.getElementById('documents-list');
 
                 if (docs.length === 0) {
-                    list.innerHTML = '<p style="text-align: center; padding: 15px; opacity: 0.6;">Aucun document</p>';
+                    list.innerHTML = '<p style="text-align: center; padding: 20px; opacity: 0.6;">Aucun document</p>';
                     return;
                 }
 
@@ -1644,7 +1629,7 @@
             },
 
             downloadDoc(id) {
-                this.showToast('💾 Téléchargement...', 'info');
+                this.showToast('💾 Téléchargement simulé', 'info');
             },
 
             deleteDoc(id) {
@@ -1658,12 +1643,12 @@
 
             // SUBSCRIPTIONS
             loadSubscriptions() {
-                const currentSub = this.db.getSubscription();
+                const user = this.db.getCurrentUser();
                 const list = document.getElementById('subscriptions-list');
 
                 list.innerHTML = Object.entries(this.SUBSCRIPTIONS)
                     .map(([key, plan]) => `
-                        <div class="subscription-card ${key === currentSub ? 'active' : ''}">
+                        <div class="subscription-card ${key === user.subscription ? 'active' : ''}">
                             <div class="subscription-icon">${plan.icon}</div>
                             <div class="subscription-name">${plan.name}</div>
                             <div class="subscription-price">
@@ -1671,14 +1656,14 @@
                             </div>
                             <div class="subscription-features">
                                 <ul>
-                                    <li>✓ ${plan.docLimit === 10000 ? '∞' : plan.docLimit} documents</li>
+                                    <li>✓ ${plan.docLimit === 10000 ? '∞' : plan.docLimit} docs</li>
                                     <li>✓ ${plan.storageLimit} MB</li>
-                                    <li>✓ Support complet</li>
-                                    <li>✓ 30+ secteurs</li>
+                                    <li>✓ Support ${key === 'free' ? 'email' : key === 'pro' ? 'prioritaire' : '24/7'}</li>
+                                    <li>✓ ${key === 'free' ? '5' : '30+'}  secteurs</li>
                                 </ul>
                             </div>
-                            ${key === currentSub ?
-                                '<div class="badge badge-success">✓ Actif</div>' :
+                            ${key === user.subscription ?
+                                '<div class="badge badge-success" style="width: 100%; text-align: center; padding: 8px;">✓ Plan actif</div>' :
                                 `<button class="btn-action" onclick="APP.showPayment('${key}', '${plan.name}', ${plan.price})">
                                     ${key === 'free' ? 'Activer' : 'Souscrire'}
                                 </button>`
@@ -1688,15 +1673,16 @@
             },
 
             showPayment(planKey, planName, price) {
-                const reference = 'BDS-' + Date.now();
-
-                if (price === 0) {
-                    this.db.setSubscription('free');
+                if (planKey === 'free') {
+                    const user = this.db.getCurrentUser();
+                    user.subscription = 'free';
+                    this.db.updateUser(user);
                     this.loadSubscriptions();
                     this.showToast('✅ Plan gratuit activé!', 'success');
                     return;
                 }
 
+                const reference = 'BDS-' + Date.now();
                 const modal = document.getElementById('payment-modal');
                 const body = document.getElementById('payment-body');
 
@@ -1718,12 +1704,12 @@
                         <div style="font-size: 11px; color: var(--text); opacity: 0.7; margin: 12px 0; line-height: 1.6;">
                             <strong>📋 Étapes :</strong><br>
                             1️⃣ Ouvrez votre app Mobile Money<br>
-                            2️⃣ Scannez le QR ou utilisez le numéro<br>
+                            2️⃣ Scannez le QR<br>
                             3️⃣ Payez ${price.toLocaleString()} FCFA<br>
-                            4️⃣ Envoyez la preuve
+                            4️⃣ Confirmez ci-dessous
                         </div>
 
-                        <button class="btn btn-warning btn-block mt-10" onclick="APP.askForProof('${planKey}', '${planName}', ${price}, '${reference}')">
+                        <button class="btn btn-warning btn-block mt-15" onclick="APP.askForProof('${planKey}', '${planName}', ${price}, '${reference}')">
                             📸 Charger la preuve
                         </button>
                     </div>
@@ -1746,13 +1732,8 @@
                 const input = document.createElement('input');
                 input.type = 'file';
                 input.accept = 'image/*';
-                input.onchange = (e) => {
-                    const file = e.target.files[0];
-                    if (file && file.type.startsWith('image/')) {
-                        this.processProof(planKey, planName, amount, reference);
-                    } else {
-                        this.showToast('❌ Selectionnez une image', 'error');
-                    }
+                input.onchange = () => {
+                    this.processProof(planKey, planName, amount, reference);
                 };
                 input.click();
             },
@@ -1762,9 +1743,10 @@
 
                 setTimeout(() => {
                     const code = this.VALIDATION_CODES[Math.floor(Math.random() * this.VALIDATION_CODES.length)];
-
-                    this.db.setSubscription(planKey);
-                    this.db.setValidationCode(code);
+                    const user = this.db.getCurrentUser();
+                    user.subscription = planKey;
+                    user.validationCode = code;
+                    this.db.updateUser(user);
 
                     this.showValidation(planName, amount, reference, code);
                 }, 1500);
@@ -1797,7 +1779,7 @@
                         Réf: <strong>${reference}</strong>
                     </div>
 
-                    <button class="btn btn-success btn-block mt-15" onclick="APP.completePayment()">
+                    <button class="btn btn-success btn-block mt-20" onclick="APP.completePayment()">
                         ✅ Fermer
                     </button>
                 `;
@@ -1838,7 +1820,7 @@
                 if (el) {
                     el.textContent = message;
                     el.classList.remove('hidden');
-                    setTimeout(() => el.classList.add('hidden'), 4000);
+                    setTimeout(() => el.classList.add('hidden'), 5000);
                 }
             },
 
@@ -1859,15 +1841,15 @@
             init() {
                 this.initTheme();
 
-                const user = this.db.getUser();
+                const user = this.db.getCurrentUser();
                 if (user) {
                     document.getElementById('logout-btn').classList.remove('hidden');
                     this.switchPage('sectors');
                 } else {
-                    this.goToLogin();
+                    this.switchPage('login');
                 }
 
-                // Drag & drop
+                // Drag & Drop
                 const dropZone = document.getElementById('drop-zone');
                 if (dropZone) {
                     dropZone.addEventListener('dragover', (e) => {
@@ -1889,22 +1871,22 @@
                     });
                 }
 
-                console.log('%c🚀 BENIN DOSSIER SECURE', 'color: #00A651; font-size: 16px; font-weight: bold;');
-                console.log('%c📧 ' + this.CONFIG.contact_email, 'color: #00BCD4;');
-                console.log('%c📱 ' + this.CONFIG.payment_number, 'color: #FCD116;');
-
                 // Service Worker
                 if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.register('data:application/javascript,' + encodeURIComponent(`
-                        self.addEventListener('install', () => self.skipWaiting());
-                        self.addEventListener('activate', () => self.clients.claim());
-                        self.addEventListener('fetch', (e) => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));
-                    `)).catch(() => {});
+                    navigator.serviceWorker.register(
+                        'data:application/javascript,' + encodeURIComponent(
+                            `self.addEventListener('install', () => self.skipWaiting());
+                             self.addEventListener('activate', () => self.clients.claim());
+                             self.addEventListener('fetch', (e) => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));`
+                        )
+                    ).catch(() => {});
                 }
+
+                console.log('🚀 APP INITIALIZED - Contact: ' + this.CONFIG.contact_email);
             }
         };
 
-        // Start
+        // START
         window.addEventListener('load', () => APP.init());
     </script>
 </body>
