@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BENIN DOSSIER SECURE - Plateforme universelle 30+ secteurs">
+    <meta name="theme-color" content="#1F4788">
+    <title>BENIN DOSSIER SECURE - Tous les secteurs</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1F4788;
+            --primary-light: #2D5016;
+            --secondary: #D4AF37;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --info: #3B82F6;
+            --light: #F3F4F6;
+            --dark: #111827;
+            --border: #E5E7EB;
+            --text: #333333;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* AUTH PAGES */
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .auth-box {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .auth-logo {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .auth-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--text);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .tabs-auth {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .navbar-brand {
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 15px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .navbar-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-menu a:hover {
+            color: var(--secondary);
+        }
+
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+        }
+
+        .user-plan-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* DASHBOARD */
+        .dashboard-page {
+            min-height: 100vh;
+            background: #f9fafb;
+            padding: 40px 0;
+        }
+
+        .dashboard-header {
+            background: white;
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .dashboard-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .dashboard-subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 5px solid #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* SECTORS GRID */
+        .sectors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .sector-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .sector-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            border-color: #667eea;
+        }
+
+        .sector-icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        .sector-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .sector-templates {
+            font-size: 11px;
+            color: #999;
+        }
+
+        /* SUBSCRIPTIONS */
+        .subscription-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .subscription-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            border-color: #667eea;
+        }
+
+        .subscription-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .subscription-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 10px;
+        }
+
+        .subscription-features {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .subscription-features li {
+            list-style: none;
+            padding-left: 18px;
+            position: relative;
+            margin-bottom: 6px;
+        }
+
+        .subscription-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-action:hover {
+            background: #5568d3;
+        }
+
+        /* QR PAYMENT */
+        .qr-payment-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .qr-code-display {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: inline-block;
+        }
+
+        #qr-code-canvas {
+            width: 200px;
+            height: 200px;
+        }
+
+        .qr-reference {
+            background: #f3f4f6;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            margin: 10px 0;
+            word-break: break-all;
+            font-size: 12px;
+        }
+
+        /* MODALS */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        /* ALERTS */
+        .alert {
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            border-left: 4px solid;
+            animation: slideUp 0.3s ease;
+        }
+
+        .alert-error {
+            background: #FEE2E2;
+            border-left-color: var(--danger);
+            color: #991B1B;
+        }
+
+        .alert-success {
+            background: #DCFCE7;
+            border-left-color: var(--success);
+            color: #166534;
+        }
+
+        .alert-info {
+            background: #DBEAFE;
+            border-left-color: var(--info);
+            color: #1E40AF;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--text);
+            color: white;
+            padding: 14px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 9999;
+            animation: slideUp 0.3s ease;
+            max-width: 350px;
+            font-size: 12px;
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--danger);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 13px;
+            }
+
+            .navbar-menu {
+                display: none;
+            }
+
+            .dashboard-title {
+                font-size: 24px;
+            }
+
+            .sectors-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .stat-value {
+                font-size: 24px;
+            }
+
+            #qr-code-canvas {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-box {
+                padding: 20px;
+            }
+
+            .dashboard-title {
+                font-size: 20px;
+            }
+
+            .sectors-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sector-icon {
+                font-size: 28px;
+            }
+
+            .sector-name {
+                font-size: 12px;
+            }
+
+            #qr-code-canvas {
+                width: 120px;
+                height: 120px;
+            }
+
+            .modal-content {
+                padding: 15px;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #DCFCE7;
+            color: #166534;
+        }
+
+        .badge-info {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(102,126,234,0.1);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 1: LOGIN -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div id="login-page" class="page auth-page active">
+    <div class="auth-box">
+        <div class="auth-header">
+            <div class="auth-logo">🇧🇏 🗂️</div>
+            <h1 class="auth-title">BENIN DOSSIER SECURE</h1>
+            <p style="color: #666; font-size: 12px;">Plateforme universelle 30+ secteurs</p>
+        </div>
+
+        <div id="login-error" class="alert alert-error hidden"></div>
+
+        <div class="tabs-auth">
+            <button class="tab-btn active" onclick="switchLoginTab('email')">📧 Email</button>
+            <button class="tab-btn" onclick="switchLoginTab('phone')">📱 Tél</button>
+        </div>
+
+        <form id="login-form-email" onsubmit="handleLogin(event, 'email')">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="login-email" placeholder="votre@email.bj" required>
+            </div>
+
+            <div class="form-group">
+                <label>Mot de passe</label>
+                <input type="password" id="login-password" placeholder="••••••••••" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 20px;">Se connecter</button>
+        </form>
+
+        <form id="login-form-phone" onsubmit="handleLogin(event, 'phone')" style="display: none;">
+            <div class="form-group">
+                <label>Téléphone</label>
+                <input type="tel" id="login-phone" placeholder="+229 90 80 80 80" required>
+            </div>
+
+            <div class="form-group">
+                <label>Mot de passe</label>
+                <input type="password" id="login-password-phone" placeholder="••••••••••" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 20px;">Se connecter</button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #666;">
+            Pas de compte? <a href="#" onclick="switchPage('register-page'); return false;" style="color: #667eea; font-weight: 600;">S'inscrire</a>
+        </div>
+
+        <div style="text-align: center; margin-top: 15px; font-size: 10px; color: #999;">
+            📧 dessouassianael51@gmail.com | 📱 +229 01 62 55 27 78
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 2: REGISTER -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div id="register-page" class="page auth-page" style="display: none;">
+    <div class="auth-box">
+        <div class="auth-header">
+            <div class="auth-logo">🇧🇏 🗂️</div>
+            <h1 class="auth-title">Créer un compte</h1>
+        </div>
+
+        <div id="register-error" class="alert alert-error hidden"></div>
+
+        <form id="register-form" onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label>Prénom</label>
+                <input type="text" id="first-name" placeholder="Jean" required>
+            </div>
+
+            <div class="form-group">
+                <label>Nom</label>
+                <input type="text" id="last-name" placeholder="Doe" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="reg-email" placeholder="votre@email.bj" required>
+            </div>
+
+            <div class="form-group">
+                <label>Téléphone</label>
+                <input type="tel" id="reg-phone" placeholder="+229 90 80 80 80" required>
+            </div>
+
+            <div class="form-group">
+                <label>Mot de passe</label>
+                <input type="password" id="reg-password" placeholder="••••••••••" required>
+            </div>
+
+            <div class="form-group">
+                <label>Confirmer</label>
+                <input type="password" id="confirm-password" placeholder="••••••••••" required>
+            </div>
+
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; cursor: pointer;">
+                <input type="checkbox" id="agree-terms" required>
+                J'accepte les conditions
+            </label>
+
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 20px;">S'inscrire</button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #666;">
+            Vous avez un compte? <a href="#" onclick="switchPage('login-page'); return false;" style="color: #667eea; font-weight: 600;">Se connecter</a>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 3: SECTORS SELECTION -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div id="sectors-page" class="page dashboard-page" style="display: none;">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <div class="navbar-brand">🇧🇏 BENIN DOSSIER</div>
+                <div class="navbar-user">
+                    <span id="user-email-header" style="font-size: 11px;"></span>
+                    <button class="btn btn-secondary" onclick="handleLogout()" style="padding: 5px 10px; font-size: 11px;">Quitter</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-header">
+        <div class="container">
+            <h1 class="dashboard-title">📊 30+ Secteurs d'activité</h1>
+            <p class="dashboard-subtitle">Sélectionnez votre domaine pour accéder aux templates appropriés</p>
+            <input type="text" id="sector-search" class="search-box" placeholder="🔍 Rechercher un secteur...">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sectors-grid" id="sectors-grid">
+            <!-- Sectors will be generated here -->
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 4: MAIN DASHBOARD -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div id="dashboard-page" class="page dashboard-page" style="display: none;">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <div class="navbar-brand">🇧🇏 <span id="navbar-sector">Secteur</span></div>
+                <div class="navbar-menu">
+                    <a href="#" onclick="switchPage('dashboard-page')">📊 Tableau</a>
+                    <a href="#" onclick="switchPage('subscriptions-page')">💎 Abonnements</a>
+                    <a href="#" onclick="switchPage('sectors-page')">📋 Secteurs</a>
+                </div>
+                <div class="navbar-user">
+                    <span class="user-plan-badge" id="user-plan-badge">Gratuit</span>
+                    <span id="user-info" style="font-size: 10px;"></span>
+                    <button class="btn btn-secondary" onclick="handleLogout()" style="padding: 5px 10px; font-size: 11px;">Quitter</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-header">
+        <div class="container">
+            <h1 class="dashboard-title" id="sector-title">📂 Tableau de bord</h1>
+            <p class="dashboard-subtitle" id="sector-description">Gérez vos documents</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="alerts-container"></div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Documents</div>
+                <div class="stat-value" id="stat-documents">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Secteurs</div>
+                <div class="stat-value" id="stat-sectors">30+</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Espace</div>
+                <div class="stat-value" id="stat-storage">0 MB</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Plan</div>
+                <div class="stat-value" id="stat-plan">Gratuit</div>
+            </div>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+            <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">🚀 Commencer</h2>
+            <button class="btn btn-primary" onclick="switchPage('subscriptions-page')" style="font-size: 13px;">
+                💎 Upgrade vers Premium
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 5: SUBSCRIPTIONS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div id="subscriptions-page" class="page dashboard-page" style="display: none;">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <div class="navbar-brand">🇧🇏 BENIN DOSSIER</div>
+                <div class="navbar-menu">
+                    <a href="#" onclick="switchPage('dashboard-page')">📊 Tableau</a>
+                </div>
+                <div class="navbar-user">
+                    <button class="btn btn-secondary" onclick="switchPage('dashboard-page')" style="padding: 5px 10px; font-size: 11px;">← Retour</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-header">
+        <div class="container">
+            <h1 class="dashboard-title">💎 Plans et Tarification</h1>
+            <p class="dashboard-subtitle">Choisissez le plan qui vous convient - 30+ secteurs inclus</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="alerts-container"></div>
+
+        <div class="sectors-grid" id="subscriptions-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+            <!-- Plans will be generated here -->
+        </div>
+    </div>
+
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="payment-modal-title">Paiement</span>
+                <button class="modal-close" onclick="closeModal('payment-modal')">✕</button>
+            </div>
+
+            <div id="payment-modal-body">
+                <!-- Payment details will be generated here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<script>
+    'use strict';
+
+    // ═════════════════════════════════════════════════════════════
+    // 📊 30+ SECTORS DATA
+    // ═════════════════════════════════════════════════════════════
+
+    const SECTORS = {
+        // Construction & Real Estate
+        genie_civil: { name: '🏗️ Génie Civil', templates: 8, color: '#FF6B6B' },
+        architecture: { name: '🏛️ Architecture', templates: 7, color: '#FF8C42' },
+        immobilier: { name: '🏠 Immobilier', templates: 6, color: '#9B59B6' },
+        construction: { name: '🏢 Construction', templates: 8, color: '#E74C3C' },
+        
+        // Legal & Administration
+        legal: { name: '⚖️ Légal', templates: 9, color: '#7C3AED' },
+        notariat: { name: '📜 Notariat', templates: 7, color: '#6366F1' },
+        administration: { name: '🏛️ Administration', templates: 8, color: '#1E40AF' },
+        
+        // Medical & Health
+        medical: { name: '🏥 Médical', templates: 10, color: '#EC4899' },
+        pharmacie: { name: '💊 Pharmacie', templates: 6, color: '#F43F5E' },
+        dentiste: { name: '🦷 Dentisterie', templates: 5, color: '#FB7185' },
+        
+        // Education
+        education: { name: '🎓 Éducation', templates: 8, color: '#F97316' },
+        universite: { name: '📚 Université', templates: 9, color: '#EA580C' },
+        formation: { name: '🎯 Formation', templates: 7, color: '#DC2626' },
+        
+        // Finance & Banking
+        financial: { name: '💰 Finance', templates: 10, color: '#0EA5E9' },
+        banque: { name: '🏦 Banque', templates: 9, color: '#0369A1' },
+        assurance: { name: '📋 Assurance', templates: 8, color: '#0284C7' },
+        
+        // Technology
+        tech: { name: '💻 Technologie', templates: 9, color: '#10B981' },
+        informatique: { name: '🖥️ Informatique', templates: 8, color: '#059669' },
+        telecom: { name: '📡 Télécom', templates: 7, color: '#047857' },
+        
+        // Agriculture
+        agriculture: { name: '🌾 Agriculture', templates: 8, color: '#84CC16' },
+        elevage: { name: '🐄 Élevage', templates: 6, color: '#65A30D' },
+        peche: { name: '🎣 Pêche', templates: 5, color: '#4B5320' },
+        
+        // Manufacturing & Industry
+        industrie: { name: '⚙️ Industrie', templates: 9, color: '#6B7280' },
+        manufacture: { name: '🏭 Manufacture', templates: 8, color: '#4B5563' },
+        
+        // Human Resources
+        rh: { name: '👔 Ressources Humaines', templates: 9, color: '#06B6D4' },
+        recrutement: { name: '👥 Recrutement', templates: 7, color: '#0891B2' },
+        
+        // Commerce & Retail
+        commerce: { name: '🛍️ Commerce', templates: 8, color: '#EC4899' },
+        retail: { name: '🏪 Retail', templates: 7, color: '#DB2777' },
+        vente: { name: '💳 Vente', templates: 6, color: '#BE185D' },
+        
+        // Transport & Logistics
+        transport: { name: '🚚 Transport', templates: 8, color: '#8B5CF6' },
+        logistique: { name: '📦 Logistique', templates: 7, color: '#7C3AED' },
+        
+        // Energy & Utilities
+        energie: { name: '⚡ Énergie', templates: 7, color: '#FBBF24' },
+        eau: { name: '💧 Eau & Assainissement', templates: 6, color: '#3B82F6' },
+        
+        // Hospitality & Tourism
+        hotel: { name: '🏨 Hôtellerie', templates: 7, color: '#F97316' },
+        tourisme: { name: '✈️ Tourisme', templates: 6, color: '#FB923C' },
+        
+        // Media & Communication
+        media: { name: '📺 Médias', templates: 7, color: '#A855F7' },
+        communication: { name: '📢 Communication', templates: 6, color: '#9333EA' },
+        
+        // Sports & Recreation
+        sports: { name: '⚽ Sports', templates: 6, color: '#DC2626' },
+        loisirs: { name: '🎮 Loisirs', templates: 5, color: '#991B1B' }
+    };
+
+    const SUBSCRIPTIONS = {
+        free: {
+            name: 'Gratuit',
+            price: 0,
+            duration: 'À jamais',
+            features: ['5 documents', '100 MB', 'Support email', '3 secteurs']
+        },
+        pro: {
+            name: 'Professionnel',
+            price: 4990,
+            duration: '/mois',
+            features: ['Docs illimités', '10 GB', 'Support prioritaire', 'Tous secteurs (30+)']
+        },
+        business: {
+            name: 'Entreprise',
+            price: 9990,
+            duration: '/mois',
+            features: ['Docs illimités', '100 GB', 'Support 24/7', 'Multi-utilisateurs']
+        }
+    };
+
+    const PAYMENT_NUMBER = '0162552778';
+
+    // ═════════════════════════════════════════════════════════════
+    // 💾 STORAGE
+    // ═════════════════════════════════════════════════════════════
+
+    class AppStorage {
+        setUser(user) {
+            localStorage.setItem('user', JSON.stringify(user));
+        }
+
+        getUser() {
+            const data = localStorage.getItem('user');
+            return data ? JSON.parse(data) : null;
+        }
+
+        setSector(sector) {
+            localStorage.setItem('currentSector', sector);
+        }
+
+        getSector() {
+            return localStorage.getItem('currentSector') || null;
+        }
+
+        setSubscription(subscription) {
+            const user = this.getUser();
+            if (user) {
+                user.subscription = subscription;
+                this.setUser(user);
+            }
+        }
+
+        getSubscription() {
+            return this.getUser()?.subscription || 'free';
+        }
+
+        clear() {
+            localStorage.clear();
+        }
+    }
+
+    const appStorage = new AppStorage();
+
+    // ═════════════════════════════════════════════════════════════
+    // 🎯 NAVIGATION
+    // ═════════════════════════════════════════════════════════════
+
+    function switchPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId)?.classList.add('active');
+        window.scrollTo(0, 0);
+
+        if (pageId === 'sectors-page') {
+            loadSectors();
+        } else if (pageId === 'dashboard-page') {
+            loadDashboard();
+        } else if (pageId === 'subscriptions-page') {
+            loadSubscriptions();
+        }
+    }
+
+    function switchLoginTab(tab) {
+        document.getElementById('login-form-email').style.display = tab === 'email' ? 'block' : 'none';
+        document.getElementById('login-form-phone').style.display = tab === 'phone' ? 'block' : 'none';
+        
+        document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+            btn.classList.toggle('active', (i === 0 && tab === 'email') || (i === 1 && tab === 'phone'));
+        });
+    }
+
+    function showModal(modalId) {
+        document.getElementById(modalId)?.classList.add('show');
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId)?.classList.remove('show');
+    }
+
+    // ═════════════════════════════════════════════════════════════
+    // 🔐 AUTHENTICATION
+    // ═════════════════════════════════════════════════════════════
+
+    function handleLogin(event, method) {
+        event.preventDefault();
+
+        const email = method === 'email' ? 
+            document.getElementById('login-email').value : 
+            'user' + Date.now() + '@benin.bj';
+
+        const user = {
+            id: 'user_' + Date.now(),
+            email,
+            firstName: 'Utilisateur',
+            lastName: 'Benin',
+            subscription: 'free'
+        };
+
+        appStorage.setUser(user);
+        localStorage.setItem('token', 'token_' + Date.now());
+
+        document.getElementById('login-form-email').reset();
+        document.getElementById('login-form-phone').reset();
+
+        switchPage('sectors-page');
+        showToast('Connexion réussie! 🎉', 'success');
+    }
+
+    function handleRegister(event) {
+        event.preventDefault();
+
+        const firstName = document.getElementById('first-name').value;
+        const lastName = document.getElementById('last-name').value;
+        const email = document.getElementById('reg-email').value;
+
+        const user = {
+            id: 'user_' + Date.now(),
+            firstName,
+            lastName,
+            email,
+            subscription: 'free'
+        };
+
+        appStorage.setUser(user);
+        localStorage.setItem('token', 'token_' + Date.now());
+
+        document.getElementById('register-form').reset();
+        switchPage('sectors-page');
+        showToast('Inscription réussie! 🎉', 'success');
+    }
+
+    function handleLogout() {
+        if (confirm('Êtes-vous sûr?')) {
+            appStorage.clear();
+            switchPage('login-page');
+        }
+    }
+
+    // ═════════════════════════════════════════════════════════════
+    // 📊 SECTORS
+    // ═════════════════════════════════════════════════════════════
+
+    function loadSectors() {
+        const user = appStorage.getUser();
+        if (!user) {
+            switchPage('login-page');
+            return;
+        }
+
+        document.getElementById('user-email-header').textContent = user.email;
+
+        const grid = document.getElementById('sectors-grid');
+        const searchInput = document.getElementById('sector-search');
+
+        const displaySectors = () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filtered = Object.entries(SECTORS).filter(([_, s]) => 
+                s.name.toLowerCase().includes(searchTerm)
+            );
+
+            grid.innerHTML = filtered.map(([key, sector]) => `
+                <div class="sector-card" onclick="selectSector('${key}')">
+                    <div class="sector-icon">${sector.name.split(' ')[0]}</div>
+                    <div class="sector-name">${sector.name}</div>
+                    <div class="sector-templates">${sector.templates} templates</div>
+                </div>
+            `).join('');
+        };
+
+        displaySectors();
+        searchInput.addEventListener('keyup', displaySectors);
+    }
+
+    function selectSector(sectorKey) {
+        appStorage.setSector(sectorKey);
+        switchPage('dashboard-page');
+        showToast(`Secteur ${SECTORS[sectorKey].name} sélectionné ✓`, 'success');
+    }
+
+    function loadDashboard() {
+        const user = appStorage.getUser();
+        const sector = appStorage.getSector();
+
+        if (!user || !sector) {
+            switchPage('login-page');
+            return;
+        }
+
+        const sectorData = SECTORS[sector];
+        const subscription = appStorage.getSubscription();
+
+        document.getElementById('navbar-sector').textContent = sectorData.name;
+        document.getElementById('sector-title').textContent = `${sectorData.name} - Tableau de bord`;
+        document.getElementById('sector-description').textContent = `Gérez vos documents dans le secteur ${sectorData.name}`;
+        document.getElementById('user-info').textContent = user.firstName;
+        document.getElementById('user-plan-badge').textContent = SUBSCRIPTIONS[subscription].name;
+        document.getElementById('stat-plan').textContent = SUBSCRIPTIONS[subscription].name;
+    }
+
+    // ═════════════════════════════════════════════════════════════
+    // 💎 SUBSCRIPTIONS
+    // ═════════════════════════════════════════════════════════════
+
+    function loadSubscriptions() {
+        const currentSub = appStorage.getSubscription();
+
+        const grid = document.getElementById('subscriptions-grid');
+        grid.innerHTML = Object.entries(SUBSCRIPTIONS).map(([key, plan]) => `
+            <div class="subscription-card" style="${key === currentSub ? 'background: #f0f9ff; border: 2px solid #0EA5E9;' : ''}">
+                <div style="font-size: 28px; margin-bottom: 10px;">
+                    ${key === 'free' ? '📦' : key === 'pro' ? '🌟' : '👑'}
+                </div>
+                <div class="subscription-name">${plan.name}</div>
+                <div class="subscription-price">
+                    ${plan.price === 0 ? 'Gratuit' : plan.price.toLocaleString() + ' FCFA'}
+                </div>
+                <div style="font-size: 11px; color: #666; margin-bottom: 15px;">${plan.duration}</div>
+                <ul class="subscription-features">
+                    ${plan.features.map(f => `<li>${f}</li>`).join('')}
+                </ul>
+                ${key === currentSub ? 
+                    `<div class="badge badge-success" style="width: 100%; text-align: center; margin-top: 15px; padding: 8px;">Plan actif</div>` : 
+                    `<button class="btn-action" onclick="showPaymentModal('${key}', '${plan.name}', ${plan.price})">
+                        ${key === 'free' ? 'Activer' : 'Payer maintenant'}
+                    </button>`
+                }
+            </div>
+        `).join('');
+    }
+
+    function showPaymentModal(planKey, planName, price) {
+        const reference = 'BDS-' + Date.now();
+
+        document.getElementById('payment-modal-title').textContent = `Paiement - ${planName}`;
+
+        const modalBody = document.getElementById('payment-modal-body');
+
+        if (price === 0) {
+            modalBody.innerHTML = `
+                <div class="alert alert-success">
+                    ✓ Activez le plan gratuit immédiatement
+                </div>
+                <button class="btn btn-success btn-block" onclick="activateFreePlan(); return false;">
+                    Activer le plan gratuit
+                </button>
+            `;
+        } else {
+            modalBody.innerHTML = `
+                <div class="alert alert-info">
+                    <strong>Montant :</strong> ${price.toLocaleString()} FCFA<br>
+                    <strong>Référence :</strong> ${reference}
+                </div>
+
+                <div class="qr-payment-container">
+                    <h3 style="font-size: 14px; font-weight: 700; margin-bottom: 12px;">📱 Scannez pour payer</h3>
+                    
+                    <div class="qr-code-display" id="qr-container">
+                        <canvas id="qr-code-canvas"></canvas>
+                    </div>
+
+                    <div class="qr-reference">
+                        Référence: ${reference}
+                    </div>
+
+                    <div style="background: #DBEAFE; border-left: 3px solid #0EA5E9; padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 11px; color: #0369A1;">
+                        <strong>Numéro de réception :</strong><br>
+                        <strong style="font-size: 14px;">${PAYMENT_NUMBER}</strong>
+                    </div>
+
+                    <button class="btn btn-success btn-block" onclick="confirmPayment('${planKey}', '${planName}', ${price}, '${reference}'); return false;" style="margin-top: 15px;">
+                        ✓ Confirmer le paiement
+                    </button>
+                </div>
+            `;
+
+            // Generate QR Code
+            setTimeout(() => {
+                const qrcodeContainer = document.getElementById('qr-container');
+                qrcodeContainer.innerHTML = '<canvas id="qr-code-canvas"></canvas>';
+
+                new QRCode(document.getElementById('qr-code-canvas'), {
+                    text: `benindossier://pay?amount=${price}&ref=${reference}&phone=${PAYMENT_NUMBER}&plan=${planKey}`,
+                    width: 200,
+                    height: 200,
+                    colorDark: '#1F4788',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            }, 100);
+        }
+
+        showModal('payment-modal');
+    }
+
+    function activateFreePlan() {
+        appStorage.setSubscription('free');
+        closeModal('payment-modal');
+        loadSubscriptions();
+        loadDashboard();
+        showToast('Plan gratuit activé! 🎉', 'success');
+    }
+
+    function confirmPayment(planKey, planName, amount, reference) {
+        appStorage.setSubscription(planKey);
+        closeModal('payment-modal');
+        loadSubscriptions();
+        loadDashboard();
+
+        showAlert('success', `✓ ${amount.toLocaleString()} FCFA payés! Plan ${planName} activé.`);
+        showToast('Abonnement activé! 🎉', 'success');
+    }
+
+    // ═════════════════════════════════════════════════════════════
+    // 🔔 NOTIFICATIONS
+    // ═════════════════════════════════════════════════════════════
+
+    function showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    function showAlert(type, message) {
+        const container = document.getElementById('alerts-container');
+        if (!container) return;
+
+        const alert = document.createElement('div');
+        alert.className = `alert alert-${type}`;
+        alert.innerHTML = message;
+        container.appendChild(alert);
+
+        setTimeout(() => alert.remove(), 5000);
+    }
+
+    // ═════════════════════════════════════════════════════════════
+    // 🚀 INITIALIZATION
+    // ═════════════════════════════════════════════════════════════
+
+    window.addEventListener('load', () => {
+        const user = appStorage.getUser();
+        
+        if (user) {
+            switchPage('sectors-page');
+        } else {
+            switchPage('login-page');
+        }
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:application/javascript,' + encodeURIComponent(`
+                self.addEventListener('install', () => self.skipWaiting());
+                self.addEventListener('activate', () => self.clients.claim());
+            `)).catch(() => {});
+        }
+    });
+</script>
+
+</body>
+</html>
