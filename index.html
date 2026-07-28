@@ -12,10 +12,8 @@
     <title>BENIN DOSSIER SECURE</title>
     <link rel="manifest" href="data:application/manifest+json,{&quot;name&quot;:&quot;BENIN DOSSIER SECURE&quot;,&quot;short_name&quot;:&quot;BD SECURE&quot;,&quot;start_url&quot;:&quot;/&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;theme_color&quot;:&quot;#00A651&quot;,&quot;background_color&quot;:&quot;#FFFFFF&quot;,&quot;scope&quot;:&quot;/&quot;}">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%2300A651'/><stop offset='100%' style='stop-color:%2300BCD4'/></linearGradient></defs><rect width='192' height='192' fill='url(%23grad)' rx='45'/><rect x='40' y='50' width='60' height='50' fill='white' rx='8'/><rect x='110' y='50' width='40' height='50' fill='white' rx='8'/><path d='M 40 110 L 152 110 Q 160 110 160 118 L 160 160 Q 160 168 152 168 L 40 168 Q 32 168 32 160 L 32 120 Q 32 110 40 110' fill='white' opacity='0.7'/><text x='96' y='150' text-anchor='middle' fill='white' font-size='60' font-weight='bold' font-family='Arial'>BD</text></svg>">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%2300A651'/><stop offset='100%' style='stop-color:%2300BCD4'/></linearGradient></defs><rect width='192' height='192' fill='url(%23grad)' rx='45'/><rect x='40' y='50' width='60' height='50' fill='white' rx='8'/><rect x='110' y='50' width='40' height='50' fill='white' rx='8'/><path d='M 40 110 L 152 110 Q 160 110 160 118 L 160 160 Q 160 168 152 168 L 40 168 Q 32 168 32 160 L 32 120 Q 32 110 40 110' fill='white' opacity='0.7'/><text x='96' y='150' text-anchor='middle' fill='white' font-size='60' font-weight='bold' font-family='Arial'>BD</text></svg>">
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3/dist/chart.min.js"></script>
     
     <style>
         * {
@@ -68,10 +66,6 @@
             --border: var(--dark-border);
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         #app-container {
             width: 100%;
             height: 100%;
@@ -80,42 +74,46 @@
             overflow: hidden;
         }
 
+        /* NAVBAR */
         .navbar {
             background: linear-gradient(135deg, var(--green) 0%, var(--turquoise) 100%);
             color: white;
-            padding: 12px 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 15px 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             flex-shrink: 0;
             z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
         }
 
         .navbar-brand {
-            font-size: 14px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 800;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+            letter-spacing: 1px;
         }
 
         .navbar-logo {
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             background: white;
-            border-radius: 8px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             color: var(--green);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .navbar-actions {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             align-items: center;
         }
 
@@ -123,11 +121,11 @@
             background: rgba(255,255,255,0.2);
             border: none;
             color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -139,36 +137,19 @@
             transform: scale(0.95);
         }
 
-        .logout-btn {
+        .profile-btn, .logout-btn {
             background: rgba(255,255,255,0.2);
             border: none;
             color: white;
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 11px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
         }
 
-        .logout-btn:active {
-            background: rgba(255,255,255,0.3);
-            transform: scale(0.95);
-        }
-
-        .profile-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .profile-btn:active {
+        .profile-btn:active, .logout-btn:active {
             background: rgba(255,255,255,0.3);
             transform: scale(0.95);
         }
@@ -183,7 +164,8 @@
         .page {
             display: none;
             min-height: 100%;
-            animation: fadeIn 0.3s ease;
+            padding-bottom: 30px;
+            animation: fadeIn 0.4s ease;
         }
 
         .page.active {
@@ -191,8 +173,8 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes slideUp {
@@ -205,104 +187,103 @@
             to { transform: rotate(360deg); }
         }
 
-        .container {
-            max-width: 100%;
-            padding: 15px;
-        }
-
-        /* AUTH STYLES */
+        /* AUTH PAGES */
         .auth-page {
             display: flex !important;
             align-items: center;
             justify-content: center;
             min-height: 100%;
             background: linear-gradient(135deg, var(--green) 0%, var(--turquoise) 100%);
-            padding: 15px;
+            padding: 20px;
         }
 
         .auth-box {
             background: var(--card);
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 35px;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
+            backdrop-filter: blur(10px);
         }
 
         .auth-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .auth-logo-display {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 15px;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 20px;
             background: linear-gradient(135deg, var(--green) 0%, var(--turquoise) 100%);
-            border-radius: 15px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            font-size: 48px;
             color: white;
             font-weight: bold;
-            box-shadow: 0 8px 20px rgba(0, 166, 81, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 166, 81, 0.4);
+            animation: slideUp 0.5s ease;
         }
 
         .auth-title {
-            font-size: 24px;
-            font-weight: 700;
+            font-size: 28px;
+            font-weight: 800;
             color: var(--green);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
         }
 
         .auth-subtitle {
             color: var(--text);
-            opacity: 0.6;
-            font-size: 12px;
+            opacity: 0.65;
+            font-size: 13px;
+            font-weight: 500;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             font-weight: 600;
             font-size: 13px;
+            color: var(--text);
         }
 
-        .form-group input,
-        .form-group select {
+        .form-group input {
             width: 100%;
-            padding: 10px 12px;
+            padding: 12px 14px;
             border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 13px;
+            border-radius: 10px;
+            font-size: 14px;
             background: var(--card);
             color: var(--text);
             transition: all 0.3s ease;
             font-family: inherit;
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
+        .form-group input:focus {
             outline: none;
             border-color: var(--green);
-            box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.1);
+            box-shadow: 0 0 0 4px rgba(0, 166, 81, 0.15);
         }
 
         .form-group input.error {
             border-color: var(--red);
-            background: rgba(206, 17, 38, 0.1);
+            background: rgba(206, 17, 38, 0.05);
         }
 
         .error-message {
             color: var(--red);
             font-size: 11px;
-            margin-top: 3px;
+            margin-top: 4px;
             display: none;
+            font-weight: 500;
         }
 
         .error-message.show {
@@ -310,22 +291,23 @@
         }
 
         .btn {
-            padding: 10px 16px;
+            padding: 12px 18px;
             border: none;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: inherit;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
+            letter-spacing: 0.5px;
         }
 
         .btn:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
 
         .btn:disabled {
@@ -340,6 +322,7 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--green) 0%, var(--turquoise) 100%);
             color: white;
+            box-shadow: 0 6px 20px rgba(0, 166, 81, 0.3);
         }
 
         .btn-secondary {
@@ -364,9 +347,10 @@
 
         .tabs {
             display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 25px;
             border-bottom: 2px solid var(--border);
+            padding-bottom: 12px;
         }
 
         .tab-btn {
@@ -379,7 +363,7 @@
             color: var(--text);
             opacity: 0.6;
             border-bottom: 3px solid transparent;
-            font-size: 12px;
+            font-size: 13px;
             transition: all 0.3s ease;
         }
 
@@ -391,151 +375,410 @@
 
         .divider {
             text-align: center;
-            margin: 15px 0;
+            margin: 20px 0;
             color: var(--text);
             opacity: 0.4;
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .form-link {
             text-align: center;
-            margin-top: 12px;
-            font-size: 12px;
+            margin-top: 16px;
+            font-size: 13px;
         }
 
         .form-link a {
             color: var(--green);
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: none;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        /* DASHBOARD STYLES */
+        .form-link a:active {
+            opacity: 0.7;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--green);
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text);
+        }
+
+        /* DASHBOARD PAGES */
         .dashboard-page {
             display: flex !important;
             flex-direction: column;
+            background: var(--bg);
         }
 
-        .dashboard-header {
-            background: var(--card);
-            padding: 15px;
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        .page-header {
+            background: linear-gradient(135deg, var(--green) 0%, var(--turquoise) 100%);
+            color: white;
+            padding: 30px 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0, 166, 81, 0.2);
         }
 
-        .dashboard-title {
-            font-size: 20px;
-            font-weight: 700;
+        .page-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 0 20px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
             color: var(--green);
-            margin-bottom: 5px;
-        }
-
-        .dashboard-subtitle {
-            color: var(--text);
-            opacity: 0.6;
-            font-size: 12px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
             gap: 10px;
-            margin-bottom: 15px;
+            letter-spacing: -0.3px;
         }
 
-        .stat-card {
-            background: var(--card);
-            padding: 15px;
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            border-left: 4px solid var(--green);
-        }
-
-        .stat-label {
+            font-size: 14px;
+            background: var(--card);
             color: var(--text);
-            opacity: 0.7;
-            font-size: 11px;
-            font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
         }
 
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--green);
+        .search-box:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(0, 166, 81, 0.15);
         }
 
+        /* SECTORS */
         .sectors-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
         }
 
         .sector-card {
             background: var(--card);
-            border-radius: 10px;
-            padding: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sector-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--green) 0%, var(--turquoise) 100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: -1;
         }
 
         .sector-card:active {
-            transform: scale(0.98);
+            transform: translateY(-6px);
             border-color: var(--green);
+            box-shadow: 0 12px 30px rgba(0, 166, 81, 0.2);
+        }
+
+        .sector-card:active::before {
+            opacity: 0.05;
         }
 
         .sector-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
+            font-size: 40px;
+            margin-bottom: 12px;
+            display: block;
         }
 
         .sector-name {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
             color: var(--green);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .sector-templates {
-            font-size: 10px;
+            font-size: 11px;
             color: var(--text);
             opacity: 0.6;
+            font-weight: 500;
         }
 
-        /* SUBSCRIPTION STYLES */
+        /* STATS CARDS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--green);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--green) 0%, transparent 70%);
+            opacity: 0.05;
+            border-radius: 50%;
+        }
+
+        .stat-label {
+            color: var(--text);
+            opacity: 0.75;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--green);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* DOCUMENTS */
+        .document-item {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .document-item:active {
+            transform: translateX(4px);
+            box-shadow: 0 6px 16px rgba(0, 166, 81, 0.15);
+        }
+
+        .document-info {
+            flex: 1;
+        }
+
+        .document-name {
+            font-weight: 700;
+            color: var(--text);
+            font-size: 14px;
+            margin-bottom: 4px;
+            word-break: break-word;
+        }
+
+        .document-meta {
+            font-size: 12px;
+            color: var(--text);
+            opacity: 0.6;
+            font-weight: 500;
+        }
+
+        .document-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .doc-btn {
+            background: var(--green);
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .doc-btn.delete {
+            background: var(--red);
+        }
+
+        .doc-btn:active {
+            opacity: 0.85;
+            transform: scale(0.95);
+        }
+
+        /* DROP ZONE */
+        .drop-zone {
+            border: 3px dashed var(--green);
+            border-radius: 14px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            background: linear-gradient(135deg, rgba(0, 166, 81, 0.05) 0%, rgba(0, 188, 212, 0.05) 100%);
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .drop-zone::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .drop-zone.drag-over {
+            border-color: var(--turquoise);
+            background: linear-gradient(135deg, rgba(0, 166, 81, 0.1) 0%, rgba(0, 188, 212, 0.1) 100%);
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(0, 166, 81, 0.2);
+        }
+
+        .drop-zone.drag-over::before {
+            left: 100%;
+        }
+
+        .drop-zone-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .drop-zone-text {
+            color: var(--green);
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .drop-zone-hint {
+            color: var(--text);
+            opacity: 0.6;
+            font-size: 12px;
+        }
+
+        .file-input-hidden {
+            display: none;
+        }
+
+        /* SUBSCRIPTIONS */
         .subscription-card {
             background: var(--card);
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
             border: 2px solid transparent;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subscription-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 166, 81, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: all 0.3s ease;
         }
 
         .subscription-card:active {
-            transform: scale(0.98);
+            transform: translateY(-4px);
         }
 
         .subscription-card.active {
             background: linear-gradient(135deg, var(--green) 0%, var(--turquoise) 100%);
             color: white;
-            border-color: var(--green);
+            border-color: var(--yellow);
+            box-shadow: 0 12px 32px rgba(0, 166, 81, 0.3);
+        }
+
+        .subscription-card.active::before {
+            opacity: 1;
+        }
+
+        .subscription-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
         }
 
         .subscription-icon {
-            font-size: 28px;
-            margin-bottom: 8px;
+            font-size: 32px;
         }
 
         .subscription-name {
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 18px;
+            font-weight: 800;
             color: var(--green);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .subscription-card.active .subscription-name {
@@ -543,10 +786,10 @@
         }
 
         .subscription-price {
-            font-size: 20px;
-            font-weight: 700;
+            font-size: 24px;
+            font-weight: 800;
             color: var(--green);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .subscription-card.active .subscription-price {
@@ -554,19 +797,20 @@
         }
 
         .subscription-features {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.8;
+            margin-bottom: 14px;
         }
 
         .subscription-card.active .subscription-features {
-            color: white;
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .subscription-features li {
             list-style: none;
-            margin-bottom: 4px;
-            padding-left: 16px;
+            margin-bottom: 6px;
+            padding-left: 20px;
             position: relative;
         }
 
@@ -575,7 +819,7 @@
             position: absolute;
             left: 0;
             color: var(--green);
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .subscription-card.active .subscription-features li::before {
@@ -584,21 +828,21 @@
 
         .btn-action {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             background: var(--green);
             color: white;
             border: none;
-            border-radius: 6px;
-            font-weight: 600;
+            border-radius: 8px;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 12px;
-            margin-top: 10px;
+            font-size: 13px;
+            margin-top: 12px;
             transition: all 0.3s ease;
         }
 
         .btn-action:active {
             background: #008841;
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
 
         .btn-action:disabled {
@@ -607,122 +851,118 @@
             opacity: 0.6;
         }
 
-        /* QR CODE */
-        .qr-payment-container {
+        /* PROFILE */
+        .profile-header {
             background: var(--card);
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            margin: 12px 0;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            gap: 20px;
+            align-items: center;
         }
 
-        .qr-code-display {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 12px 0;
-            display: inline-block;
-            border: 3px solid var(--green);
-        }
-
-        .qr-code-display canvas {
-            width: 200px !important;
-            height: 200px !important;
-            display: block;
-        }
-
-        .payment-number {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--green);
-            margin: 12px 0;
-            padding: 10px;
-            background: rgba(0, 166, 81, 0.1);
-            border-radius: 6px;
-            user-select: all;
-        }
-
-        .validation-code-display {
+        .profile-avatar {
+            width: 70px;
+            height: 70px;
             background: linear-gradient(135deg, var(--green) 0%, var(--turquoise) 100%);
-            color: white;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            margin: 15px 0;
-        }
-
-        .validation-code {
-            font-size: 28px;
-            font-weight: 700;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 3px;
-            margin: 12px 0;
-            padding: 12px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 6px;
-            user-select: all;
-        }
-
-        /* MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
+            border-radius: 14px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 15px;
+            color: white;
+            font-size: 28px;
+            font-weight: 800;
+            box-shadow: 0 6px 16px rgba(0, 166, 81, 0.3);
+            flex-shrink: 0;
         }
 
-        .modal.show {
-            display: flex;
-            animation: fadeIn 0.3s ease;
+        .profile-info {
+            flex: 1;
         }
 
-        .modal-content {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 20px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .modal-header {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 12px;
+        .profile-name {
+            font-size: 18px;
+            font-weight: 800;
             color: var(--green);
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            font-size: 13px;
+            color: var(--text);
+            opacity: 0.75;
+            margin-bottom: 2px;
+        }
+
+        .profile-phone {
+            font-size: 13px;
+            color: var(--text);
+            opacity: 0.75;
+        }
+
+        .info-section {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .info-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
         }
 
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
             color: var(--text);
-            opacity: 0.6;
-            transition: all 0.3s ease;
+            opacity: 0.7;
+            font-weight: 600;
         }
 
-        .modal-close:active {
-            transform: scale(1.2);
+        .info-value {
+            color: var(--green);
+            font-weight: 700;
         }
 
-        /* ALERT */
+        /* BADGES */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-success {
+            background: rgba(0, 166, 81, 0.2);
+            color: var(--green);
+        }
+
+        .badge-info {
+            background: rgba(0, 188, 212, 0.2);
+            color: var(--turquoise);
+        }
+
+        /* ALERTS */
         .alert {
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            font-size: 12px;
+            padding: 14px;
+            border-radius: 10px;
+            margin-bottom: 14px;
+            font-size: 13px;
             border-left: 4px solid;
             animation: slideUp 0.3s ease;
+            font-weight: 500;
         }
 
         .alert-error {
@@ -743,280 +983,124 @@
             color: var(--turquoise);
         }
 
-        .alert-warning {
-            background: rgba(255, 140, 0, 0.1);
-            border-left-color: var(--orange);
-            color: var(--orange);
-        }
-
         /* TOAST */
         .toast {
             position: fixed;
-            bottom: 20px;
-            right: 15px;
+            bottom: 25px;
+            right: 20px;
             background: var(--text);
             color: white;
-            padding: 12px 16px;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            padding: 14px 18px;
+            border-radius: 10px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
             z-index: 9999;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
             animation: slideUp 0.3s ease;
             max-width: 300px;
         }
 
-        .toast.success {
-            background: var(--green);
-        }
+        .toast.success { background: var(--green); }
+        .toast.error { background: var(--red); }
+        .toast.warning { background: var(--orange); }
+        .toast.info { background: var(--turquoise); }
 
-        .toast.error {
-            background: var(--red);
-        }
-
-        .toast.warning {
-            background: var(--orange);
-        }
-
-        .toast.info {
-            background: var(--turquoise);
-        }
-
-        /* DOCUMENT */
-        .document-item {
-            background: var(--card);
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .document-item:active {
-            transform: scale(0.98);
-        }
-
-        .document-info {
-            flex: 1;
-        }
-
-        .document-name {
-            font-weight: 600;
-            color: var(--text);
-            font-size: 13px;
-            margin-bottom: 3px;
-            word-break: break-word;
-        }
-
-        .document-meta {
-            font-size: 11px;
-            color: var(--text);
-            opacity: 0.6;
-        }
-
-        .document-actions {
-            display: flex;
-            gap: 6px;
-        }
-
-        .doc-btn {
-            background: var(--green);
-            color: white;
-            border: none;
-            padding: 5px 8px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .doc-btn.delete {
-            background: var(--red);
-        }
-
-        .doc-btn:active {
-            opacity: 0.8;
-            transform: scale(0.95);
-        }
-
-        /* DROP ZONE */
-        .drop-zone {
-            border: 2px dashed var(--border);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            background: var(--light-border);
-            margin: 12px 0;
-            transition: all 0.3s ease;
-        }
-
-        .drop-zone.drag-over {
-            border-color: var(--green);
-            background: rgba(0, 166, 81, 0.05);
-            transform: scale(1.02);
-        }
-
-        .file-input-hidden {
+        /* MODAL */
+        .modal {
             display: none;
-        }
-
-        /* CHECKBOX */
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 12px;
-        }
-
-        .checkbox-group input {
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
-
-        .checkbox-group label {
-            margin: 0;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        /* SEARCH */
-        .search-box {
-            width: 100%;
-            padding: 8px 12px;
-            border: 2px solid var(--border);
-            border-radius: 6px;
-            font-size: 12px;
-            background: var(--card);
-            color: var(--text);
-            margin-bottom: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .search-box:focus {
-            outline: none;
-            border-color: var(--green);
-            box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.1);
-        }
-
-        /* BADGE */
-        .badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: 600;
-        }
-
-        .badge-success {
-            background: rgba(0, 166, 81, 0.2);
-            color: var(--green);
-        }
-
-        .badge-info {
-            background: rgba(0, 188, 212, 0.2);
-            color: var(--turquoise);
-        }
-
-        /* PROFILE */
-        .profile-section {
-            background: var(--card);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .profile-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .profile-info {
-            flex: 1;
-        }
-
-        .profile-name {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--green);
-            margin-bottom: 3px;
-        }
-
-        .profile-email {
-            font-size: 12px;
-            color: var(--text);
-            opacity: 0.7;
-        }
-
-        .profile-avatar {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--green) 0%, var(--turquoise) 100%);
-            border-radius: 10px;
-            display: flex;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
             align-items: center;
             justify-content: center;
-            color: white;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+        }
+
+        .modal-header {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--green);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
             font-size: 24px;
-            font-weight: bold;
+            cursor: pointer;
+            color: var(--text);
+            opacity: 0.6;
+            transition: all 0.3s ease;
         }
 
-        /* LOADING */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(0, 166, 81, 0.3);
-            border-radius: 50%;
-            border-top-color: var(--green);
-            animation: spin 1s ease-in-out infinite;
+        .modal-close:active {
+            opacity: 1;
+            transform: scale(1.15);
         }
 
-        /* UTILITY */
-        .text-center {
-            text-align: center;
-        }
-
+        /* UTILITIES */
         .hidden {
             display: none !important;
         }
 
-        .mt-10 { margin-top: 10px; }
-        .mt-15 { margin-top: 15px; }
+        .text-center {
+            text-align: center;
+        }
+
         .mt-20 { margin-top: 20px; }
-        .mb-10 { margin-bottom: 10px; }
-        .mb-15 { margin-bottom: 15px; }
         .mb-20 { margin-bottom: 20px; }
 
         /* RESPONSIVE */
         @media (max-width: 480px) {
             .auth-box {
-                padding: 20px;
-            }
-
-            .qr-code-display canvas {
-                width: 150px !important;
-                height: 150px !important;
-            }
-
-            .validation-code {
-                font-size: 20px;
-                letter-spacing: 2px;
+                padding: 28px;
+                border-radius: 18px;
             }
 
             .sectors-grid {
-                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                padding: 12px 15px;
             }
 
             .navbar-brand span {
                 display: none;
+            }
+
+            .page-title {
+                font-size: 26px;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -1024,14 +1108,14 @@
 <body>
     <div id="app-container">
         <!-- NAVBAR -->
-        <nav class="navbar" id="navbar">
+        <nav class="navbar">
             <div class="navbar-brand">
                 <div class="navbar-logo">BD</div>
                 <span>BENIN DOSSIER</span>
             </div>
             <div class="navbar-actions">
-                <button class="theme-toggle" onclick="APP.toggleTheme()" title="Thème" id="theme-btn">🌙</button>
-                <button class="profile-btn hidden" id="profile-btn" onclick="APP.switchPage('profile')" title="Profil">👤</button>
+                <button class="theme-toggle" onclick="APP.toggleTheme()" id="theme-btn">🌙</button>
+                <button class="profile-btn hidden" id="profile-btn" onclick="APP.switchPage('profile')">👤</button>
                 <button class="logout-btn hidden" id="logout-btn" onclick="APP.handleLogout()">Quitter</button>
             </div>
         </nav>
@@ -1042,22 +1126,22 @@
             <div id="login-page" class="page auth-page active">
                 <div class="auth-box">
                     <div class="auth-header">
-                        <div class="auth-logo-display">BD</div>
-                        <h1 class="auth-title">BENIN DOSSIER</h1>
-                        <p class="auth-subtitle">Plateforme de Gestion Documentaire Sécurisée</p>
+                        <div class="auth-logo-display">🔐</div>
+                        <h1 class="auth-title">CONNEXION</h1>
+                        <p class="auth-subtitle">Accédez à vos documents sécurisés</p>
                     </div>
 
                     <div id="login-error" class="alert alert-error hidden"></div>
 
                     <div class="tabs">
                         <button type="button" class="tab-btn active" onclick="APP.switchTab('email')">📧 Email</button>
-                        <button type="button" class="tab-btn" onclick="APP.switchTab('phone')">📱 Tél</button>
+                        <button type="button" class="tab-btn" onclick="APP.switchTab('phone')">📱 Téléphone</button>
                     </div>
 
                     <form id="email-login-form" onsubmit="APP.handleLogin(event, 'email')">
                         <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" id="email-input" placeholder="votre@email.bj" required>
+                            <label>Adresse Email</label>
+                            <input type="email" id="email-input" placeholder="exemple@email.bj" required>
                             <div class="error-message"></div>
                         </div>
 
@@ -1067,12 +1151,12 @@
                             <div class="error-message"></div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block">🔓 Connexion</button>
+                        <button type="submit" class="btn btn-primary btn-block">🔓 Se connecter</button>
                     </form>
 
                     <form id="phone-login-form" onsubmit="APP.handleLogin(event, 'phone')" style="display: none;">
                         <div class="form-group">
-                            <label>Téléphone</label>
+                            <label>Numéro de téléphone</label>
                             <input type="tel" id="phone-login-input" placeholder="+229 XX XX XX XX" required>
                             <div class="error-message"></div>
                         </div>
@@ -1083,13 +1167,13 @@
                             <div class="error-message"></div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block">🔓 Connexion</button>
+                        <button type="submit" class="btn btn-primary btn-block">🔓 Se connecter</button>
                     </form>
 
-                    <div class="divider">─ ou ─</div>
+                    <div class="divider">─────── OU ───────</div>
 
                     <div class="form-link">
-                        Pas de compte? <a onclick="APP.goToRegister()">S'inscrire</a>
+                        Pas encore de compte? <a onclick="APP.goToRegister()">S'inscrire maintenant</a>
                     </div>
                 </div>
             </div>
@@ -1098,9 +1182,9 @@
             <div id="register-page" class="page auth-page" style="display: none;">
                 <div class="auth-box">
                     <div class="auth-header">
-                        <div class="auth-logo-display">+</div>
-                        <h1 class="auth-title">Créer un Compte</h1>
-                        <p class="auth-subtitle">Rejoignez BENIN DOSSIER</p>
+                        <div class="auth-logo-display">✨</div>
+                        <h1 class="auth-title">INSCRIPTION</h1>
+                        <p class="auth-subtitle">Créez votre compte gratuitement</p>
                     </div>
 
                     <div id="register-error" class="alert alert-error hidden"></div>
@@ -1113,14 +1197,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Nom</label>
-                            <input type="text" id="reg-lastname" placeholder="Doe" required>
+                            <label>Nom de famille</label>
+                            <input type="text" id="reg-lastname" placeholder="Dupont" required>
                             <div class="error-message"></div>
                         </div>
 
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" id="reg-email" placeholder="votre@email.bj" required>
+                            <input type="email" id="reg-email" placeholder="exemple@email.bj" required>
                             <div class="error-message"></div>
                         </div>
 
@@ -1131,72 +1215,76 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Mot de passe</label>
-                            <input type="password" id="reg-password" placeholder="Min 6 caractères" required>
+                            <label>Mot de passe (min 6 caractères)</label>
+                            <input type="password" id="reg-password" placeholder="Créez un mot de passe sûr" required>
                             <div class="error-message"></div>
                         </div>
 
                         <div class="form-group">
-                            <label>Confirmer</label>
-                            <input type="password" id="reg-confirm" placeholder="Confirmez le mot de passe" required>
+                            <label>Confirmer le mot de passe</label>
+                            <input type="password" id="reg-confirm" placeholder="Confirmez votre mot de passe" required>
                             <div class="error-message"></div>
                         </div>
 
                         <div class="checkbox-group">
                             <input type="checkbox" id="reg-agree" required>
-                            <label for="reg-agree">J'accepte les conditions</label>
+                            <label for="reg-agree">J'accepte les conditions d'utilisation</label>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block mt-15">✍️ S'inscrire</button>
+                        <button type="submit" class="btn btn-primary btn-block">✍️ Créer mon compte</button>
                     </form>
 
-                    <div class="divider">─ ou ─</div>
+                    <div class="divider">─────── OU ───────</div>
 
                     <div class="form-link">
-                        Déjà un compte? <a onclick="APP.goToLogin()">Connexion</a>
+                        Vous avez déjà un compte? <a onclick="APP.goToLogin()">Se connecter</a>
                     </div>
                 </div>
             </div>
 
             <!-- PAGE 3: SECTORS -->
             <div id="sectors-page" class="page dashboard-page" style="display: none;">
-                <div class="dashboard-header">
-                    <h2 class="dashboard-title">📊 30+ Secteurs</h2>
-                    <p class="dashboard-subtitle">Sélectionnez votre domaine</p>
+                <div class="page-header">
+                    <h1 class="page-title">📊 Secteurs d'Activité</h1>
+                    <p class="page-subtitle">Sélectionnez votre domaine d'activité</p>
                 </div>
 
                 <div class="container">
-                    <input type="text" class="search-box" id="sector-search" placeholder="🔍 Rechercher..." onkeyup="APP.filterSectors()">
-                    <div class="sectors-grid" id="sectors-grid"></div>
+                    <div class="section">
+                        <input type="text" class="search-box" id="sector-search" placeholder="🔍 Rechercher un secteur..." onkeyup="APP.filterSectors()">
+                        <div class="sectors-grid" id="sectors-grid"></div>
+                    </div>
                 </div>
             </div>
 
             <!-- PAGE 4: DASHBOARD -->
             <div id="dashboard-page" class="page dashboard-page" style="display: none;">
-                <div class="dashboard-header">
-                    <h2 class="dashboard-title" id="dashboard-title">📂 Tableau de bord</h2>
-                    <p class="dashboard-subtitle" id="dashboard-subtitle">Gérez vos documents</p>
+                <div class="page-header">
+                    <h1 class="page-title" id="dashboard-title">📂 Tableau de bord</h1>
+                    <p class="page-subtitle" id="dashboard-subtitle">Gérez vos documents efficacement</p>
                 </div>
 
                 <div class="container">
                     <div id="dashboard-alerts"></div>
 
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-label">📄 Documents</div>
-                            <div class="stat-value" id="stat-docs">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">💾 Espace</div>
-                            <div class="stat-value" id="stat-space">0 MB</div>
+                    <div class="section">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-label">📄 Documents</div>
+                                <div class="stat-value" id="stat-docs">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">💾 Espace utilisé</div>
+                                <div class="stat-value" id="stat-space">0 MB</div>
+                            </div>
                         </div>
                     </div>
 
-                    <div style="background: var(--card); border-radius: 10px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-                        <h3 style="font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 8px;">🚀 Actions</h3>
-                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                            <button class="btn btn-primary" onclick="APP.switchPage('subscriptions')" style="font-size: 11px; flex: 1; min-width: 100px;">💎 Abonnements</button>
-                            <button class="btn btn-secondary" onclick="APP.switchPage('documents')" style="font-size: 11px; flex: 1; min-width: 100px;">📁 Documents</button>
+                    <div class="section">
+                        <h3 class="section-title">🚀 Actions rapides</h3>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                            <button class="btn btn-primary" onclick="APP.switchPage('documents')" style="justify-content: center;">📁 Mes Fichiers</button>
+                            <button class="btn btn-success" onclick="APP.switchPage('subscriptions')" style="justify-content: center;">💎 Abonnements</button>
                         </div>
                     </div>
                 </div>
@@ -1204,105 +1292,140 @@
 
             <!-- PAGE 5: DOCUMENTS -->
             <div id="documents-page" class="page dashboard-page" style="display: none;">
-                <div class="dashboard-header">
-                    <h2 class="dashboard-title">📁 Mes Documents</h2>
-                    <p class="dashboard-subtitle">Gérez vos fichiers</p>
+                <div class="page-header">
+                    <h1 class="page-title">📁 Gestion des Fichiers</h1>
+                    <p class="page-subtitle">Organisez vos documents en toute sécurité</p>
                 </div>
 
                 <div class="container">
-                    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
-                        <p style="font-size: 28px; margin-bottom: 6px;">📄</p>
-                        <p style="color: var(--green); font-weight: 600; font-size: 12px;">Glissez un fichier ou cliquez</p>
-                        <p style="color: var(--text); opacity: 0.6; font-size: 10px; margin-top: 4px;">Max 50 MB</p>
+                    <div class="section">
+                        <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+                            <span class="drop-zone-icon">📤</span>
+                            <p class="drop-zone-text">Cliquez ou glissez un fichier</p>
+                            <p class="drop-zone-hint">Formats supportés: PDF, Word, Excel, PPT, Images (Max 50MB)</p>
+                        </div>
+
+                        <input type="file" id="file-input" class="file-input-hidden" onchange="APP.handleFileUpload(event)" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.txt,.zip,.rar">
                     </div>
 
-                    <input type="file" id="file-input" class="file-input-hidden" onchange="APP.handleFileUpload(event)" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.txt,.zip,.rar">
-
-                    <h3 style="font-size: 13px; font-weight: 700; color: var(--green); margin: 12px 0;">Vos fichiers (<span id="doc-count">0</span>)</h3>
-                    <div id="documents-list"></div>
+                    <div class="section">
+                        <h3 class="section-title">📋 Vos fichiers (<span id="doc-count">0</span>)</h3>
+                        <div id="documents-list"></div>
+                    </div>
                 </div>
             </div>
 
             <!-- PAGE 6: SUBSCRIPTIONS -->
             <div id="subscriptions-page" class="page dashboard-page" style="display: none;">
-                <div class="dashboard-header">
-                    <h2 class="dashboard-title">💎 Plans d'Abonnement</h2>
-                    <p class="dashboard-subtitle">Choisissez votre plan</p>
+                <div class="page-header">
+                    <h1 class="page-title">💎 Plans d'Abonnement</h1>
+                    <p class="page-subtitle">Choisissez le plan qui vous convient</p>
                 </div>
 
                 <div class="container">
                     <div id="sub-alerts"></div>
-                    <div id="subscriptions-list"></div>
+
+                    <div class="section">
+                        <div id="subscriptions-list"></div>
+                    </div>
+
+                    <div class="section" style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, var(--green) 0%, var(--turquoise) 100%); border-radius: 14px; color: white; text-align: center;">
+                        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 8px;">📱 Besoin d'aide?</h3>
+                        <p style="font-size: 13px; opacity: 0.95; margin-bottom: 12px;">Contactez notre équipe support</p>
+                        <p style="font-size: 12px; font-weight: 600;">
+                            📧 dessouassianael51@gmail.com<br>
+                            📱 +229 0162552778
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <!-- PAGE 7: PROFILE -->
             <div id="profile-page" class="page dashboard-page" style="display: none;">
-                <div class="dashboard-header">
-                    <h2 class="dashboard-title">👤 Mon Profil</h2>
-                    <p class="dashboard-subtitle">Mes informations</p>
+                <div class="page-header">
+                    <h1 class="page-title">👤 Mon Profil</h1>
+                    <p class="page-subtitle">Gérez vos informations personnelles</p>
                 </div>
 
                 <div class="container">
-                    <div class="profile-section">
+                    <div class="section">
                         <div class="profile-header">
+                            <div class="profile-avatar" id="profile-avatar">BD</div>
                             <div class="profile-info">
                                 <div class="profile-name" id="profile-name">---</div>
                                 <div class="profile-email" id="profile-email">---</div>
-                            </div>
-                            <div class="profile-avatar" id="profile-avatar">BD</div>
-                        </div>
-                    </div>
-
-                    <div class="profile-section">
-                        <h3 style="font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 8px;">📋 Informations Compte</h3>
-                        <div style="font-size: 12px; color: var(--text); opacity: 0.8; line-height: 1.8;">
-                            <strong>📧 Email :</strong> <span id="profile-email-full">---</span><br>
-                            <strong>📱 Téléphone :</strong> <span id="profile-phone">---</span><br>
-                            <strong>🏢 Secteur :</strong> <span id="profile-sector">---</span><br>
-                            <strong>💎 Plan :</strong> <span id="profile-plan">---</span><br>
-                            <strong>📅 Inscrit le :</strong> <span id="profile-date">---</span>
-                        </div>
-                    </div>
-
-                    <div class="profile-section">
-                        <h3 style="font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 8px;">📊 Statistiques</h3>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                            <div style="background: rgba(0, 166, 81, 0.1); padding: 10px; border-radius: 8px; text-align: center;">
-                                <div style="font-size: 20px; font-weight: 700; color: var(--green);" id="stats-docs">0</div>
-                                <div style="font-size: 11px; opacity: 0.6;">Documents</div>
-                            </div>
-                            <div style="background: rgba(0, 166, 81, 0.1); padding: 10px; border-radius: 8px; text-align: center;">
-                                <div style="font-size: 20px; font-weight: 700; color: var(--green);" id="stats-space">0 MB</div>
-                                <div style="font-size: 11px; opacity: 0.6;">Espace utilisé</div>
+                                <div class="profile-phone" id="profile-phone">---</div>
                             </div>
                         </div>
                     </div>
 
-                    <div style="display: flex; gap: 6px; margin-top: 12px;">
-                        <button class="btn btn-secondary btn-block" onclick="APP.switchPage('sectors')">🔄 Changer secteur</button>
-                        <button class="btn btn-danger btn-block" onclick="APP.handleLogout()">🚪 Déconnexion</button>
+                    <div class="section">
+                        <h3 class="section-title">📋 Informations du compte</h3>
+                        <div class="info-section">
+                            <div class="info-row">
+                                <span class="info-label">📧 Email</span>
+                                <span class="info-value" id="profile-email-full">---</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">📱 Téléphone</span>
+                                <span class="info-value" id="profile-phone-full">---</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">🏢 Secteur</span>
+                                <span class="info-value" id="profile-sector">---</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">💎 Abonnement</span>
+                                <span class="info-value" id="profile-plan">---</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">📅 Membre depuis</span>
+                                <span class="info-value" id="profile-date">---</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">📊 Statistiques</h3>
+                        <div class="info-section">
+                            <div class="info-row">
+                                <span class="info-label">📄 Documents</span>
+                                <span class="info-value" id="stats-docs">0</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">💾 Espace utilisé</span>
+                                <span class="info-value" id="stats-space">0 MB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section" style="margin-bottom: 50px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <button class="btn btn-secondary" onclick="APP.switchPage('sectors')" style="justify-content: center;">🔄 Changer secteur</button>
+                            <button class="btn btn-danger" onclick="APP.handleLogout()" style="justify-content: center;">🚪 Déconnexion</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- MODALS -->
+    <!-- PAYMENT MODAL -->
     <div id="payment-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span>💳 Paiement</span>
+                <span>💳 Validation du Paiement</span>
                 <button class="modal-close" onclick="APP.closeModal()">&times;</button>
             </div>
             <div id="payment-body"></div>
         </div>
     </div>
 
+    <!-- VALIDATION MODAL -->
     <div id="validation-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span>✅ Code de Validation</span>
+                <span>✅ Confirmation</span>
                 <button class="modal-close" onclick="APP.closeModal('validation')">&times;</button>
             </div>
             <div id="validation-body"></div>
@@ -1312,20 +1435,17 @@
     <script>
         'use strict';
 
-        // Initialize EmailJS
-        emailjs.init('YOUR_EMAILJS_PUBLIC_KEY');
-
         const APP = {
             CONFIG: {
                 contact_email: 'dessouassianael51@gmail.com',
                 payment_number: '0162552778',
                 app_name: 'BENIN DOSSIER SECURE',
-                app_version: '1.0.0'
+                app_version: '2.0.0'
             },
 
             VALIDATION_CODES: [
-                'BDS-USER-4321', 'BDS-USER-1234', 'BDS-USER-3214', 'BDS-USER-2314',
-                'BDS-USER-3124', 'BDS-USER-1432', 'BDS-USER-1324', 'BDS-USER-4231'
+                'BDS-2024-4321', 'BDS-2024-1234', 'BDS-2024-3214', 'BDS-2024-2314',
+                'BDS-2024-3124', 'BDS-2024-1432', 'BDS-2024-1324', 'BDS-2024-4231'
             ],
 
             SECTORS: {
@@ -1374,29 +1494,29 @@
                 free: {
                     name: 'Plan Gratuit',
                     price: 0,
-                    duration: 'À jamais',
+                    duration: 'Illimité',
                     icon: '📦',
                     docLimit: 5,
                     storageLimit: 100,
-                    features: ['5 documents max', '100 MB stockage', 'Support par email', 'Accès 5 secteurs']
+                    features: ['5 documents max', '100 MB stockage', 'Support par email', '5 secteurs']
                 },
                 pro: {
                     name: 'Plan Professionnel',
                     price: 4990,
-                    duration: '/mois',
+                    duration: 'par mois',
                     icon: '🌟',
                     docLimit: 10000,
                     storageLimit: 10240,
-                    features: ['Illimité documents', '10 GB stockage', 'Support prioritaire', 'Accès 30+ secteurs', 'Partage de fichiers']
+                    features: ['Documents illimitésé', '10 GB stockage', 'Support prioritaire', '30+ secteurs', 'Partage sécurisé']
                 },
                 business: {
                     name: 'Plan Entreprise',
                     price: 9990,
-                    duration: '/mois',
+                    duration: 'par mois',
                     icon: '👑',
                     docLimit: 50000,
                     storageLimit: 102400,
-                    features: ['Illimité documents', '100 GB stockage', 'Support 24/7', 'Accès tous secteurs', 'Partage avancé', 'Analytics complets']
+                    features: ['Documents illimitésé', '100 GB stockage', 'Support 24/7', 'Tous secteurs', 'Partage avancé', 'Analytics']
                 }
             },
 
@@ -1418,7 +1538,6 @@
                         ...user,
                         id: 'user_' + Date.now(),
                         createdAt: new Date().toISOString(),
-                        lastLogin: new Date().toISOString(),
                         subscription: 'free'
                     };
                     users.push(newUser);
@@ -1439,7 +1558,7 @@
                     const users = this.getAllUsers();
                     const index = users.findIndex(u => u.id === user.id);
                     if (index !== -1) {
-                        users[index] = {...user, updatedAt: new Date().toISOString()};
+                        users[index] = user;
                         localStorage.setItem('bd_users', JSON.stringify(users));
                     }
                     this.setCurrentUser(user);
@@ -1455,6 +1574,7 @@
 
                 getDocuments() {
                     const user = this.getCurrentUser();
+                    if (!user) return [];
                     const data = localStorage.getItem('bd_documents_' + user.id);
                     return data ? JSON.parse(data) : [];
                 },
@@ -1469,7 +1589,6 @@
                         date: new Date().toISOString()
                     });
                     localStorage.setItem('bd_documents_' + user.id, JSON.stringify(docs));
-                    return doc;
                 },
 
                 deleteDocument(id) {
@@ -1481,7 +1600,6 @@
 
                 clear() {
                     localStorage.removeItem('bd_current_user');
-                    sessionStorage.clear();
                 }
             },
 
@@ -1503,17 +1621,16 @@
 
             // NAVIGATION
             switchPage(pageId) {
-                console.log('Switching to page:', pageId);
-                
                 document.querySelectorAll('.page').forEach(p => {
                     p.classList.remove('active');
                     p.style.display = 'none';
                 });
-                
+
                 const page = document.getElementById(pageId + '-page');
                 if (page) {
                     page.classList.add('active');
                     page.style.display = 'block';
+                    window.scrollTo(0, 0);
                 }
 
                 if (pageId === 'sectors') this.loadSectors();
@@ -1521,14 +1638,6 @@
                 else if (pageId === 'documents') this.loadDocuments();
                 else if (pageId === 'subscriptions') this.loadSubscriptions();
                 else if (pageId === 'profile') this.loadProfile();
-                else if (pageId === 'login') {
-                    document.getElementById('login-page').style.display = 'block';
-                    document.getElementById('register-page').style.display = 'none';
-                }
-                else if (pageId === 'register') {
-                    document.getElementById('login-page').style.display = 'none';
-                    document.getElementById('register-page').style.display = 'block';
-                }
             },
 
             switchTab(tab) {
@@ -1554,6 +1663,7 @@
                 document.getElementById('register-page').style.display = 'none';
                 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
                 document.getElementById('login-page').classList.add('active');
+                window.scrollTo(0, 0);
             },
 
             goToRegister() {
@@ -1561,6 +1671,7 @@
                 document.getElementById('register-page').style.display = 'block';
                 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
                 document.getElementById('register-page').classList.add('active');
+                window.scrollTo(0, 0);
             },
 
             // AUTHENTICATION
@@ -1590,7 +1701,7 @@
                 if (password.length < 6) {
                     this.showError(
                         method === 'email' ? document.getElementById('password-input') : document.getElementById('password-phone-input'),
-                        'Min 6 caractères'
+                        'Minimum 6 caractères'
                     );
                     return;
                 }
@@ -1598,8 +1709,6 @@
                 const user = this.db.findUser(email, phone);
 
                 if (user && user.password === password) {
-                    const token = 'token_' + Date.now();
-                    user.token = token;
                     user.lastLogin = new Date().toISOString();
                     this.db.setCurrentUser(user);
                     this.db.updateUser(user);
@@ -1609,17 +1718,11 @@
                     document.getElementById('logout-btn').classList.remove('hidden');
                     document.getElementById('profile-btn').classList.remove('hidden');
 
-                    this.showToast('✅ Bienvenue ' + user.firstName, 'success');
+                    this.showToast('✅ Bienvenue ' + user.firstName + '!', 'success');
                     
-                    // Send welcome email
-                    this.sendEmail({
-                        to_email: user.email,
-                        to_name: user.firstName + ' ' + user.lastName,
-                        subject: 'Bienvenue sur BENIN DOSSIER SECURE',
-                        message: `Bonjour ${user.firstName},\n\nVous êtes maintenant connecté à BENIN DOSSIER SECURE.\n\nEmail de contact: ${this.CONFIG.contact_email}`
-                    });
-
-                    setTimeout(() => this.switchPage('sectors'), 600);
+                    setTimeout(() => {
+                        this.switchPage('sectors');
+                    }, 800);
                 } else {
                     this.showAlert('login-error', '❌ Identifiants incorrects');
                 }
@@ -1652,7 +1755,7 @@
                 }
 
                 if (password.length < 6) {
-                    this.showError(document.getElementById('reg-password'), 'Min 6 caractères');
+                    this.showError(document.getElementById('reg-password'), 'Minimum 6 caractères');
                     return;
                 }
 
@@ -1680,36 +1783,17 @@
                 });
 
                 document.getElementById('register-form').reset();
-
-                this.showToast('✅ Inscription réussie! Connectez-vous.', 'success');
-
-                // Send confirmation email
-                this.sendEmail({
-                    to_email: email,
-                    to_name: firstName,
-                    subject: 'Bienvenue sur BENIN DOSSIER SECURE',
-                    message: `Bonjour ${firstName} ${lastName},\n\nVotre compte a été créé avec succès!\n\nEmail de contact: ${this.CONFIG.contact_email}\n\nNuméro de paiement: ${this.CONFIG.payment_number}`
-                });
-
-                setTimeout(() => this.goToLogin(), 1000);
+                this.showToast('✅ Compte créé! Connectez-vous.', 'success');
+                
+                setTimeout(() => this.goToLogin(), 1200);
             },
 
             handleLogout() {
                 if (confirm('Êtes-vous sûr de vouloir vous déconnecter?')) {
-                    const user = this.db.getCurrentUser();
-                    
-                    // Send logout email
-                    this.sendEmail({
-                        to_email: user.email,
-                        to_name: user.firstName,
-                        subject: 'Déconnexion de BENIN DOSSIER SECURE',
-                        message: `À bientôt ${user.firstName}!\n\nVous avez été déconnecté de BENIN DOSSIER SECURE.`
-                    });
-
                     this.db.clear();
                     document.getElementById('logout-btn').classList.add('hidden');
                     document.getElementById('profile-btn').classList.add('hidden');
-                    this.showToast('👋 Déconnecté', 'info');
+                    this.showToast('👋 À bientôt!', 'info');
                     this.switchPage('login');
                 }
             },
@@ -1726,9 +1810,9 @@
                 grid.innerHTML = Object.entries(this.SECTORS)
                     .map(([key, sector]) => `
                         <div class="sector-card" onclick="APP.selectSector('${key}')">
-                            <div class="sector-icon">${sector.name.split(' ')[0]}</div>
-                            <div class="sector-name">${sector.name}</div>
-                            <div class="sector-templates">${sector.templates} docs</div>
+                            <span class="sector-icon">${sector.name.split(' ')[0]}</span>
+                            <div class="sector-name">${sector.name.split(' ').slice(1).join(' ')}</div>
+                            <div class="sector-templates">${sector.templates} modèles</div>
                         </div>
                     `).join('');
             },
@@ -1741,19 +1825,23 @@
                     sector.name.toLowerCase().includes(search)
                 );
 
-                grid.innerHTML = filtered.length > 0 ? filtered
-                    .map(([key, sector]) => `
-                        <div class="sector-card" onclick="APP.selectSector('${key}')">
-                            <div class="sector-icon">${sector.name.split(' ')[0]}</div>
-                            <div class="sector-name">${sector.name}</div>
-                            <div class="sector-templates">${sector.templates} docs</div>
-                        </div>
-                    `).join('') : '<p style="grid-column: 1/-1; text-align: center; padding: 20px; opacity: 0.6;">Aucun résultat</p>';
+                if (filtered.length > 0) {
+                    grid.innerHTML = filtered
+                        .map(([key, sector]) => `
+                            <div class="sector-card" onclick="APP.selectSector('${key}')">
+                                <span class="sector-icon">${sector.name.split(' ')[0]}</span>
+                                <div class="sector-name">${sector.name.split(' ').slice(1).join(' ')}</div>
+                                <div class="sector-templates">${sector.templates} modèles</div>
+                            </div>
+                        `).join('');
+                } else {
+                    grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; opacity: 0.5;">😢 Aucun secteur trouvé</div>';
+                }
             },
 
             selectSector(key) {
                 this.db.setSector(key);
-                this.showToast(`✅ ${this.SECTORS[key].name} sélectionné`, 'success');
+                this.showToast(`✅ Secteur: ${this.SECTORS[key].name.split(' ').slice(1).join(' ')}`, 'success');
                 setTimeout(() => this.switchPage('dashboard'), 500);
             },
 
@@ -1770,8 +1858,7 @@
                 }
 
                 const sectorData = this.SECTORS[sector];
-
-                document.getElementById('dashboard-title').textContent = `${sectorData.name}`;
+                document.getElementById('dashboard-title').textContent = sectorData.name;
                 document.getElementById('dashboard-subtitle').textContent = `Bienvenue ${user.firstName}!`;
                 document.getElementById('stat-docs').textContent = docs.length;
 
@@ -1782,19 +1869,11 @@
                 alerts.innerHTML = '';
 
                 if (docs.length >= sub.docLimit && sub.docLimit !== 10000) {
-                    alerts.innerHTML = `
-                        <div class="alert alert-warning">
-                            ⚠️ Limite ${sub.docLimit} docs atteinte. <a onclick="APP.switchPage('subscriptions')" style="text-decoration: underline; cursor: pointer; font-weight: 600;">Upgrade</a>
-                        </div>
-                    `;
+                    alerts.innerHTML += `<div class="alert alert-warning">⚠️ Limite atteinte. <a onclick="APP.switchPage('subscriptions')" style="cursor: pointer; text-decoration: underline; font-weight: 700;">Upgrade</a></div>`;
                 }
 
                 if (user.subscription === 'free') {
-                    alerts.innerHTML += `
-                        <div class="alert alert-info">
-                            💡 Passer à Pro pour plus d'avantages et de stockage! <a onclick="APP.switchPage('subscriptions')" style="text-decoration: underline; cursor: pointer; font-weight: 600;">Voir les plans</a>
-                        </div>
-                    `;
+                    alerts.innerHTML += `<div class="alert alert-info">💡 Passez à Pro pour plus d'espace! <a onclick="APP.switchPage('subscriptions')" style="cursor: pointer; text-decoration: underline; font-weight: 700;">Voir les plans</a></div>`;
                 }
             },
 
@@ -1808,26 +1887,25 @@
                 const docs = this.db.getDocuments();
 
                 if (docs.length >= sub.docLimit) {
-                    this.showToast('❌ Limite atteinte. Upgrade votre plan!', 'error');
+                    this.showToast('❌ Limite atteinte', 'error');
                     return;
                 }
 
                 if (file.size > 50 * 1024 * 1024) {
-                    this.showToast('❌ Fichier trop volumineux (max 50MB)', 'error');
+                    this.showToast('❌ Fichier trop volumineux', 'error');
                     return;
                 }
 
                 this.db.addDocument({
                     name: file.name,
                     size: file.size,
-                    type: file.type,
-                    sector: this.db.getSector()
+                    type: file.type
                 });
 
                 document.getElementById('file-input').value = '';
                 this.loadDocuments();
                 this.loadDashboard();
-                this.showToast('✅ ' + file.name + ' ajouté avec succès', 'success');
+                this.showToast('✅ ' + file.name + ' ajouté!', 'success');
             },
 
             loadDocuments() {
@@ -1836,14 +1914,13 @@
                 document.getElementById('doc-count').textContent = docs.length;
 
                 if (docs.length === 0) {
-                    list.innerHTML = '<p style="text-align: center; padding: 20px; opacity: 0.6;">📭 Aucun document. Commencez à uploader!</p>';
+                    list.innerHTML = '<div style="text-align: center; padding: 40px; opacity: 0.5;">📭 Aucun fichier. Commencez!</div>';
                     return;
                 }
 
                 list.innerHTML = docs.map(doc => {
                     const date = new Date(doc.date).toLocaleDateString('fr-FR');
                     const size = (doc.size / 1024).toFixed(0);
-
                     return `
                         <div class="document-item">
                             <div class="document-info">
@@ -1852,7 +1929,7 @@
                             </div>
                             <div class="document-actions">
                                 <button class="doc-btn" onclick="APP.downloadDoc('${doc.id}', '${doc.name}')">💾</button>
-                                <button class="doc-btn delete" onclick="APP.deleteDoc('${doc.id}', '${doc.name}')">🗑️</button>
+                                <button class="doc-btn delete" onclick="APP.deleteDoc('${doc.id}')">🗑️</button>
                             </div>
                         </div>
                     `;
@@ -1860,18 +1937,15 @@
             },
 
             downloadDoc(id, name) {
-                this.showToast('💾 Préparation du téléchargement...', 'info');
-                setTimeout(() => {
-                    this.showToast('✅ ' + name + ' est prêt!', 'success');
-                }, 1000);
+                this.showToast('💾 ' + name, 'info');
             },
 
-            deleteDoc(id, name) {
-                if (confirm('Supprimer "' + name + '"?')) {
+            deleteDoc(id) {
+                if (confirm('Supprimer ce fichier?')) {
                     this.db.deleteDocument(id);
                     this.loadDocuments();
                     this.loadDashboard();
-                    this.showToast('✅ Document supprimé', 'success');
+                    this.showToast('✅ Fichier supprimé', 'success');
                 }
             },
 
@@ -1883,10 +1957,12 @@
                 list.innerHTML = Object.entries(this.SUBSCRIPTIONS)
                     .map(([key, plan]) => `
                         <div class="subscription-card ${key === user.subscription ? 'active' : ''}">
-                            <div class="subscription-icon">${plan.icon}</div>
-                            <div class="subscription-name">${plan.name}</div>
-                            <div class="subscription-price">
-                                ${plan.price === 0 ? 'Gratuit' : plan.price.toLocaleString() + ' FCFA'}
+                            <div class="subscription-header">
+                                <div style="flex: 1;">
+                                    <div class="subscription-name">${plan.name}</div>
+                                    <div class="subscription-price">${plan.price === 0 ? 'Gratuit' : plan.price.toLocaleString() + ' FCFA'} <span style="font-size: 12px; opacity: 0.85;">${plan.duration}</span></div>
+                                </div>
+                                <div class="subscription-icon">${plan.icon}</div>
                             </div>
                             <div class="subscription-features">
                                 <ul>
@@ -1894,7 +1970,7 @@
                                 </ul>
                             </div>
                             ${key === user.subscription ?
-                                '<div class="badge badge-success" style="width: 100%; text-align: center; padding: 8px;">✓ Plan actif</div>' :
+                                '<div class="badge badge-success" style="width: 100%; text-align: center; padding: 10px; margin-top: 12px;">✓ Plan actif</div>' :
                                 `<button class="btn-action" onclick="APP.showPayment('${key}', '${plan.name}', ${plan.price})">
                                     ${key === 'free' ? '✅ Activer' : '🛒 Souscrire'}
                                 </button>`
@@ -1919,109 +1995,74 @@
 
                 body.innerHTML = `
                     <div class="alert alert-info">
-                        <strong>💰 Montant :</strong> <span style="font-size: 16px; color: var(--green);">${price.toLocaleString()} FCFA</span><br>
-                        <strong>📱 Numéro :</strong> <span style="font-family: monospace;">${this.CONFIG.payment_number}</span><br>
-                        <strong>🔖 Référence :</strong> <span style="font-family: monospace;">${reference}</span>
+                        <strong>💰 Montant :</strong> <span style="font-weight: 800; color: var(--green);">${price.toLocaleString()} FCFA</span><br>
+                        <strong>📱 Numéro :</strong> <span>${this.CONFIG.payment_number}</span><br>
+                        <strong>🔖 Référence :</strong> <span>${reference}</span>
                     </div>
 
-                    <div class="qr-payment-container">
-                        <h3 style="font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--green);">📱 Code QR Mobile Money</h3>
-                        <div class="qr-code-display" id="qr-container">
-                            <canvas id="qr-code-canvas"></canvas>
+                    <div class="info-section" style="margin: 16px 0;">
+                        <h3 style="font-size: 14px; font-weight: 800; color: var(--green); margin-bottom: 12px;">📋 Instructions de paiement</h3>
+                        <div style="font-size: 12px; line-height: 1.8; color: var(--text);">
+                            1️⃣ Appelez <strong>${this.CONFIG.payment_number}</strong><br>
+                            2️⃣ Payez exactement <strong>${price.toLocaleString()} FCFA</strong><br>
+                            3️⃣ Référence: <strong>${reference}</strong><br>
+                            4️⃣ Confirmez ci-dessous
                         </div>
-
-                        <div class="payment-number">
-                            💬 ${this.CONFIG.payment_number}
-                        </div>
-
-                        <div style="font-size: 11px; color: var(--text); opacity: 0.7; margin: 12px 0; line-height: 1.8;">
-                            <strong>📋 Étapes de paiement :</strong><br>
-                            1️⃣ Ouvrez votre application Mobile Money<br>
-                            2️⃣ Scannez le QR ou contactez le numéro<br>
-                            3️⃣ Payez exactement <strong>${price.toLocaleString()} FCFA</strong><br>
-                            4️⃣ Confirmez le paiement ci-dessous
-                        </div>
-
-                        <button class="btn btn-warning btn-block mt-15" onclick="APP.askForProof('${planKey}', '${planName}', ${price}, '${reference}')">
-                            📸 Confirmer le paiement
-                        </button>
                     </div>
+
+                    <button class="btn btn-warning btn-block mt-20" onclick="APP.confirmPayment('${planKey}', '${planName}', ${price}, '${reference}')">
+                        ✅ Confirmer le paiement
+                    </button>
                 `;
-
-                setTimeout(() => {
-                    new QRCode(document.getElementById('qr-code-canvas'), {
-                        text: `*384*0*0*0*0*0*${this.CONFIG.payment_number}*${price}*${reference}#`,
-                        width: 180,
-                        height: 180,
-                        colorDark: '#00A651',
-                        colorLight: '#ffffff'
-                    });
-                }, 100);
 
                 modal.classList.add('show');
             },
 
-            askForProof(planKey, planName, amount, reference) {
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.accept = 'image/*';
-                input.onchange = () => {
-                    if (input.files[0]) {
-                        this.processProof(planKey, planName, amount, reference);
-                    }
+            confirmPayment(planKey, planName, amount, reference) {
+                const code = this.VALIDATION_CODES[Math.floor(Math.random() * this.VALIDATION_CODES.length)];
+                const user = this.db.getCurrentUser();
+                user.subscription = planKey;
+                user.lastPayment = {
+                    date: new Date().toISOString(),
+                    amount: amount,
+                    reference: reference,
+                    code: code
                 };
-                input.click();
+                this.db.updateUser(user);
+
+                this.showValidation(planName, amount, reference, code);
             },
 
-            processProof(planKey, planName, amount, reference) {
-                this.showToast('📸 Vérification de la preuve...', 'info');
-
-                setTimeout(() => {
-                    const code = this.VALIDATION_CODES[Math.floor(Math.random() * this.VALIDATION_CODES.length)];
-                    const user = this.db.getCurrentUser();
-                    user.subscription = planKey;
-                    user.validationCode = code;
-                    user.lastPayment = {
-                        date: new Date().toISOString(),
-                        amount: amount,
-                        reference: reference,
-                        code: code
-                    };
-                    this.db.updateUser(user);
-
-                    this.showValidation(planName, amount, reference, code, user.email);
-                }, 1500);
-            },
-
-            showValidation(planName, amount, reference, code, userEmail) {
+            showValidation(planName, amount, reference, code) {
                 document.getElementById('payment-modal').classList.remove('show');
 
                 const modal = document.getElementById('validation-modal');
                 const body = document.getElementById('validation-body');
 
                 body.innerHTML = `
-                    <div class="alert alert-success mb-15">
-                        ✅ Paiement vérifié avec succès!
+                    <div class="alert alert-success mb-20">
+                        ✅ Paiement confirmé avec succès!
                     </div>
 
-                    <div class="validation-code-display">
-                        <h3 style="font-size: 13px; margin-bottom: 8px; opacity: 0.9;">Votre code de validation</h3>
-                        <div class="validation-code">${code}</div>
-                        <p style="font-size: 11px; opacity: 0.8; margin-top: 8px;">
-                            Conservez ce code pour vos dossiers
-                        </p>
+                    <div style="background: linear-gradient(135deg, var(--green) 0%, var(--turquoise) 100%); color: white; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 20px;">
+                        <h3 style="font-size: 13px; opacity: 0.9; margin-bottom: 10px;">Votre code de validation</h3>
+                        <div style="font-size: 26px; font-weight: 800; font-family: monospace; letter-spacing: 2px; padding: 12px; background: rgba(255,255,255,0.2); border-radius: 8px;">${code}</div>
+                        <p style="font-size: 11px; opacity: 0.85; margin-top: 10px;">Conservez ce code pour vos dossiers</p>
                     </div>
 
-                    <div class="alert alert-info mt-15">
-                        <strong>📋 Résumé de la transaction :</strong><br>
-                        <strong>Plan :</strong> ${planName}<br>
-                        <strong>Montant :</strong> ${amount.toLocaleString()} FCFA<br>
-                        <strong>Référence :</strong> ${reference}<br>
-                        <strong>Date :</strong> ${new Date().toLocaleDateString('fr-FR')}
-                    </div>
-
-                    <div class="alert alert-warning">
-                        💡 Un email de confirmation a été envoyé à ${userEmail}
+                    <div class="info-section">
+                        <div class="info-row">
+                            <span class="info-label">Plan</span>
+                            <span class="info-value">${planName}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Montant</span>
+                            <span class="info-value">${amount.toLocaleString()} FCFA</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Référence</span>
+                            <span class="info-value" style="font-size: 11px;">${reference}</span>
+                        </div>
                     </div>
 
                     <button class="btn btn-success btn-block mt-20" onclick="APP.completePayment()">
@@ -2030,14 +2071,6 @@
                 `;
 
                 modal.classList.add('show');
-
-                // Send payment confirmation email
-                this.sendEmail({
-                    to_email: userEmail,
-                    to_name: 'Client',
-                    subject: 'Confirmation de paiement - ' + planName,
-                    message: `Paiement confirmé!\n\nPlan: ${planName}\nMontant: ${amount.toLocaleString()} FCFA\nRéférence: ${reference}\nCode de validation: ${code}\n\nContact: ${this.CONFIG.contact_email}`
-                });
             },
 
             completePayment() {
@@ -2045,7 +2078,7 @@
                 this.loadSubscriptions();
                 this.loadDashboard();
                 this.loadProfile();
-                this.showToast('✅ Abonnement activé! Bienvenue!', 'success');
+                this.showToast('✅ Abonnement activé!', 'success');
             },
 
             closeModal(which) {
@@ -2068,35 +2101,18 @@
                     return;
                 }
 
+                document.getElementById('profile-avatar').textContent = (user.firstName[0] + user.lastName[0]).toUpperCase();
                 document.getElementById('profile-name').textContent = user.firstName + ' ' + user.lastName;
                 document.getElementById('profile-email').textContent = user.email;
-                document.getElementById('profile-avatar').textContent = (user.firstName[0] + user.lastName[0]).toUpperCase();
-                document.getElementById('profile-email-full').textContent = user.email;
                 document.getElementById('profile-phone').textContent = user.phone;
+                document.getElementById('profile-email-full').textContent = user.email;
+                document.getElementById('profile-phone-full').textContent = user.phone;
                 document.getElementById('profile-sector').textContent = this.SECTORS[sector]?.name || 'Non sélectionné';
-                document.getElementById('profile-plan').innerHTML = `<span style="color: var(--green); font-weight: 700;">${sub.name}</span>`;
+                document.getElementById('profile-plan').textContent = sub.name;
                 document.getElementById('profile-date').textContent = new Date(user.createdAt).toLocaleDateString('fr-FR');
                 document.getElementById('stats-docs').textContent = docs.length;
                 const totalSize = docs.reduce((sum, d) => sum + (d.size || 0), 0);
                 document.getElementById('stats-space').textContent = (totalSize / (1024 * 1024)).toFixed(1) + ' MB';
-            },
-
-            // EMAIL SERVICE
-            sendEmail(emailData) {
-                try {
-                    // In production, integrate with your email service
-                    console.log('Email envoyé:', emailData);
-                    
-                    // Store email locally for reference
-                    const emails = JSON.parse(localStorage.getItem('bd_emails') || '[]');
-                    emails.push({
-                        ...emailData,
-                        sentAt: new Date().toISOString()
-                    });
-                    localStorage.setItem('bd_emails', JSON.stringify(emails));
-                } catch (error) {
-                    console.log('Email enregistré localement');
-                }
             },
 
             // NOTIFICATIONS
@@ -2110,7 +2126,7 @@
                     toast.style.opacity = '0';
                     toast.style.transition = 'opacity 0.3s ease';
                     setTimeout(() => toast.remove(), 300);
-                }, 3000);
+                }, 3200);
             },
 
             showAlert(id, message) {
@@ -2137,10 +2153,7 @@
 
             // INIT
             init() {
-                console.log('%c🚀 BENIN DOSSIER SECURE DÉMARRÉ', 'color: #00A651; font-size: 16px; font-weight: bold;');
-                console.log('%cVersion: ' + this.CONFIG.app_version, 'color: #00A651;');
-                console.log('%cContact: ' + this.CONFIG.contact_email, 'color: #00A651;');
-                console.log('%cPaiements: ' + this.CONFIG.payment_number, 'color: #00A651;');
+                console.log('%c🚀 BENIN DOSSIER SECURE v' + this.CONFIG.app_version, 'color: #00A651; font-size: 14px; font-weight: bold;');
 
                 this.initTheme();
 
@@ -2173,29 +2186,9 @@
                         }
                     });
                 }
-
-                // Service Worker for offline support
-                if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.register(
-                        'data:application/javascript,' + encodeURIComponent(
-                            `self.addEventListener('install', () => self.skipWaiting());
-                             self.addEventListener('activate', () => self.clients.claim());
-                             self.addEventListener('fetch', (e) => {
-                                try {
-                                    e.respondWith(fetch(e.request));
-                                } catch(err) {
-                                    e.respondWith(new Response('Offline - Application disponible en mode hors ligne', {
-                                        headers: { 'Content-Type': 'text/plain' }
-                                    }));
-                                }
-                             });`
-                        )
-                    ).catch(() => {});
-                }
             }
         };
 
-        // START
         window.addEventListener('load', () => APP.init());
     </script>
 </body>
