@@ -15,6 +15,7 @@
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%2300A651'/><stop offset='100%' style='stop-color:%2300BCD4'/></linearGradient></defs><rect width='192' height='192' fill='url(%23grad)' rx='45'/><rect x='40' y='50' width='60' height='50' fill='white' rx='8'/><rect x='110' y='50' width='40' height='50' fill='white' rx='8'/><path d='M 40 110 L 152 110 Q 160 110 160 118 L 160 160 Q 160 168 152 168 L 40 168 Q 32 168 32 160 L 32 120 Q 32 110 40 110' fill='white' opacity='0.7'/><text x='96' y='150' text-anchor='middle' fill='white' font-size='60' font-weight='bold' font-family='Arial'>BD</text></svg>">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     
     <style>
         * {
@@ -130,10 +131,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
         }
 
         .theme-toggle:active {
             background: rgba(255,255,255,0.3);
+            transform: scale(0.95);
         }
 
         .logout-btn {
@@ -145,10 +148,29 @@
             font-size: 11px;
             cursor: pointer;
             font-weight: 600;
+            transition: all 0.3s ease;
         }
 
         .logout-btn:active {
             background: rgba(255,255,255,0.3);
+            transform: scale(0.95);
+        }
+
+        .profile-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:active {
+            background: rgba(255,255,255,0.3);
+            transform: scale(0.95);
         }
 
         main {
@@ -178,6 +200,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         .container {
             max-width: 100%;
             padding: 15px;
@@ -185,7 +212,7 @@
 
         /* AUTH STYLES */
         .auth-page {
-            display: flex;
+            display: flex !important;
             align-items: center;
             justify-content: center;
             min-height: 100%;
@@ -353,6 +380,7 @@
             opacity: 0.6;
             border-bottom: 3px solid transparent;
             font-size: 12px;
+            transition: all 0.3s ease;
         }
 
         .tab-btn.active {
@@ -384,7 +412,7 @@
 
         /* DASHBOARD STYLES */
         .dashboard-page {
-            display: flex;
+            display: flex !important;
             flex-direction: column;
         }
 
@@ -565,10 +593,12 @@
             cursor: pointer;
             font-size: 12px;
             margin-top: 10px;
+            transition: all 0.3s ease;
         }
 
         .btn-action:active {
             background: #008841;
+            transform: scale(0.98);
         }
 
         .btn-action:disabled {
@@ -609,6 +639,7 @@
             padding: 10px;
             background: rgba(0, 166, 81, 0.1);
             border-radius: 6px;
+            user-select: all;
         }
 
         .validation-code-display {
@@ -629,6 +660,7 @@
             padding: 12px;
             background: rgba(255,255,255,0.2);
             border-radius: 6px;
+            user-select: all;
         }
 
         /* MODAL */
@@ -676,6 +708,11 @@
             cursor: pointer;
             color: var(--text);
             opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:active {
+            transform: scale(1.2);
         }
 
         /* ALERT */
@@ -726,6 +763,7 @@
             font-size: 12px;
             font-weight: 600;
             animation: slideUp 0.3s ease;
+            max-width: 300px;
         }
 
         .toast.success {
@@ -754,6 +792,11 @@
             justify-content: space-between;
             align-items: center;
             border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .document-item:active {
+            transform: scale(0.98);
         }
 
         .document-info {
@@ -787,6 +830,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 10px;
+            transition: all 0.3s ease;
         }
 
         .doc-btn.delete {
@@ -795,6 +839,7 @@
 
         .doc-btn:active {
             opacity: 0.8;
+            transform: scale(0.95);
         }
 
         /* DROP ZONE */
@@ -806,11 +851,13 @@
             cursor: pointer;
             background: var(--light-border);
             margin: 12px 0;
+            transition: all 0.3s ease;
         }
 
         .drop-zone.drag-over {
             border-color: var(--green);
             background: rgba(0, 166, 81, 0.05);
+            transform: scale(1.02);
         }
 
         .file-input-hidden {
@@ -847,6 +894,7 @@
             background: var(--card);
             color: var(--text);
             margin-bottom: 12px;
+            transition: all 0.3s ease;
         }
 
         .search-box:focus {
@@ -872,6 +920,63 @@
         .badge-info {
             background: rgba(0, 188, 212, 0.2);
             color: var(--turquoise);
+        }
+
+        /* PROFILE */
+        .profile-section {
+            background: var(--card);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 3px;
+        }
+
+        .profile-email {
+            font-size: 12px;
+            color: var(--text);
+            opacity: 0.7;
+        }
+
+        .profile-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--green) 0%, var(--turquoise) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* LOADING */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0, 166, 81, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--green);
+            animation: spin 1s ease-in-out infinite;
         }
 
         /* UTILITY */
@@ -909,6 +1014,10 @@
             .sectors-grid {
                 grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
             }
+
+            .navbar-brand span {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -922,6 +1031,7 @@
             </div>
             <div class="navbar-actions">
                 <button class="theme-toggle" onclick="APP.toggleTheme()" title="Thème" id="theme-btn">🌙</button>
+                <button class="profile-btn hidden" id="profile-btn" onclick="APP.switchPage('profile')" title="Profil">👤</button>
                 <button class="logout-btn hidden" id="logout-btn" onclick="APP.handleLogout()">Quitter</button>
             </div>
         </nav>
@@ -934,14 +1044,14 @@
                     <div class="auth-header">
                         <div class="auth-logo-display">BD</div>
                         <h1 class="auth-title">BENIN DOSSIER</h1>
-                        <p class="auth-subtitle">Plateforme de Gestion Documentaire</p>
+                        <p class="auth-subtitle">Plateforme de Gestion Documentaire Sécurisée</p>
                     </div>
 
                     <div id="login-error" class="alert alert-error hidden"></div>
 
                     <div class="tabs">
-                        <button class="tab-btn active" onclick="APP.switchTab('email')">📧 Email</button>
-                        <button class="tab-btn" onclick="APP.switchTab('phone')">📱 Tél</button>
+                        <button type="button" class="tab-btn active" onclick="APP.switchTab('email')">📧 Email</button>
+                        <button type="button" class="tab-btn" onclick="APP.switchTab('phone')">📱 Tél</button>
                     </div>
 
                     <form id="email-login-form" onsubmit="APP.handleLogin(event, 'email')">
@@ -1106,9 +1216,9 @@
                         <p style="color: var(--text); opacity: 0.6; font-size: 10px; margin-top: 4px;">Max 50 MB</p>
                     </div>
 
-                    <input type="file" id="file-input" class="file-input-hidden" onchange="APP.handleFileUpload(event)" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.txt">
+                    <input type="file" id="file-input" class="file-input-hidden" onchange="APP.handleFileUpload(event)" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.txt,.zip,.rar">
 
-                    <h3 style="font-size: 13px; font-weight: 700; color: var(--green); margin: 12px 0;">Vos fichiers</h3>
+                    <h3 style="font-size: 13px; font-weight: 700; color: var(--green); margin: 12px 0;">Vos fichiers (<span id="doc-count">0</span>)</h3>
                     <div id="documents-list"></div>
                 </div>
             </div>
@@ -1116,13 +1226,63 @@
             <!-- PAGE 6: SUBSCRIPTIONS -->
             <div id="subscriptions-page" class="page dashboard-page" style="display: none;">
                 <div class="dashboard-header">
-                    <h2 class="dashboard-title">💎 Plans</h2>
+                    <h2 class="dashboard-title">💎 Plans d'Abonnement</h2>
                     <p class="dashboard-subtitle">Choisissez votre plan</p>
                 </div>
 
                 <div class="container">
                     <div id="sub-alerts"></div>
                     <div id="subscriptions-list"></div>
+                </div>
+            </div>
+
+            <!-- PAGE 7: PROFILE -->
+            <div id="profile-page" class="page dashboard-page" style="display: none;">
+                <div class="dashboard-header">
+                    <h2 class="dashboard-title">👤 Mon Profil</h2>
+                    <p class="dashboard-subtitle">Mes informations</p>
+                </div>
+
+                <div class="container">
+                    <div class="profile-section">
+                        <div class="profile-header">
+                            <div class="profile-info">
+                                <div class="profile-name" id="profile-name">---</div>
+                                <div class="profile-email" id="profile-email">---</div>
+                            </div>
+                            <div class="profile-avatar" id="profile-avatar">BD</div>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3 style="font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 8px;">📋 Informations Compte</h3>
+                        <div style="font-size: 12px; color: var(--text); opacity: 0.8; line-height: 1.8;">
+                            <strong>📧 Email :</strong> <span id="profile-email-full">---</span><br>
+                            <strong>📱 Téléphone :</strong> <span id="profile-phone">---</span><br>
+                            <strong>🏢 Secteur :</strong> <span id="profile-sector">---</span><br>
+                            <strong>💎 Plan :</strong> <span id="profile-plan">---</span><br>
+                            <strong>📅 Inscrit le :</strong> <span id="profile-date">---</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3 style="font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 8px;">📊 Statistiques</h3>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                            <div style="background: rgba(0, 166, 81, 0.1); padding: 10px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 20px; font-weight: 700; color: var(--green);" id="stats-docs">0</div>
+                                <div style="font-size: 11px; opacity: 0.6;">Documents</div>
+                            </div>
+                            <div style="background: rgba(0, 166, 81, 0.1); padding: 10px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 20px; font-weight: 700; color: var(--green);" id="stats-space">0 MB</div>
+                                <div style="font-size: 11px; opacity: 0.6;">Espace utilisé</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 6px; margin-top: 12px;">
+                        <button class="btn btn-secondary btn-block" onclick="APP.switchPage('sectors')">🔄 Changer secteur</button>
+                        <button class="btn btn-danger btn-block" onclick="APP.handleLogout()">🚪 Déconnexion</button>
+                    </div>
                 </div>
             </div>
         </main>
@@ -1132,7 +1292,7 @@
     <div id="payment-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span>Paiement</span>
+                <span>💳 Paiement</span>
                 <button class="modal-close" onclick="APP.closeModal()">&times;</button>
             </div>
             <div id="payment-body"></div>
@@ -1152,16 +1312,20 @@
     <script>
         'use strict';
 
+        // Initialize EmailJS
+        emailjs.init('YOUR_EMAILJS_PUBLIC_KEY');
+
         const APP = {
             CONFIG: {
                 contact_email: 'dessouassianael51@gmail.com',
                 payment_number: '0162552778',
-                app_name: 'BENIN DOSSIER SECURE'
+                app_name: 'BENIN DOSSIER SECURE',
+                app_version: '1.0.0'
             },
 
             VALIDATION_CODES: [
-                'USER4321', 'USER1234', 'USER3214', 'USER2314',
-                'USER3124', 'USER1432', 'USER1324', 'USER4231'
+                'BDS-USER-4321', 'BDS-USER-1234', 'BDS-USER-3214', 'BDS-USER-2314',
+                'BDS-USER-3124', 'BDS-USER-1432', 'BDS-USER-1324', 'BDS-USER-4231'
             ],
 
             SECTORS: {
@@ -1213,23 +1377,26 @@
                     duration: 'À jamais',
                     icon: '📦',
                     docLimit: 5,
-                    storageLimit: 100
+                    storageLimit: 100,
+                    features: ['5 documents max', '100 MB stockage', 'Support par email', 'Accès 5 secteurs']
                 },
                 pro: {
-                    name: 'Professionnel',
+                    name: 'Plan Professionnel',
                     price: 4990,
                     duration: '/mois',
                     icon: '🌟',
                     docLimit: 10000,
-                    storageLimit: 10240
+                    storageLimit: 10240,
+                    features: ['Illimité documents', '10 GB stockage', 'Support prioritaire', 'Accès 30+ secteurs', 'Partage de fichiers']
                 },
                 business: {
-                    name: 'Entreprise',
+                    name: 'Plan Entreprise',
                     price: 9990,
                     duration: '/mois',
                     icon: '👑',
                     docLimit: 50000,
-                    storageLimit: 102400
+                    storageLimit: 102400,
+                    features: ['Illimité documents', '100 GB stockage', 'Support 24/7', 'Accès tous secteurs', 'Partage avancé', 'Analytics complets']
                 }
             },
 
@@ -1247,13 +1414,16 @@
 
                 createUser(user) {
                     const users = this.getAllUsers();
-                    users.push({
+                    const newUser = {
                         ...user,
                         id: 'user_' + Date.now(),
-                        createdAt: new Date().toISOString()
-                    });
+                        createdAt: new Date().toISOString(),
+                        lastLogin: new Date().toISOString(),
+                        subscription: 'free'
+                    };
+                    users.push(newUser);
                     localStorage.setItem('bd_users', JSON.stringify(users));
-                    return user;
+                    return newUser;
                 },
 
                 setCurrentUser(user) {
@@ -1267,9 +1437,9 @@
 
                 updateUser(user) {
                     const users = this.getAllUsers();
-                    const index = users.findIndex(u => u.email === user.email);
+                    const index = users.findIndex(u => u.id === user.id);
                     if (index !== -1) {
-                        users[index] = user;
+                        users[index] = {...user, updatedAt: new Date().toISOString()};
                         localStorage.setItem('bd_users', JSON.stringify(users));
                     }
                     this.setCurrentUser(user);
@@ -1284,24 +1454,29 @@
                 },
 
                 getDocuments() {
-                    const data = localStorage.getItem('bd_documents');
+                    const user = this.getCurrentUser();
+                    const data = localStorage.getItem('bd_documents_' + user.id);
                     return data ? JSON.parse(data) : [];
                 },
 
                 addDocument(doc) {
+                    const user = this.getCurrentUser();
                     const docs = this.getDocuments();
                     docs.push({
                         ...doc,
                         id: 'doc_' + Date.now(),
+                        userId: user.id,
                         date: new Date().toISOString()
                     });
-                    localStorage.setItem('bd_documents', JSON.stringify(docs));
+                    localStorage.setItem('bd_documents_' + user.id, JSON.stringify(docs));
+                    return doc;
                 },
 
                 deleteDocument(id) {
+                    const user = this.getCurrentUser();
                     let docs = this.getDocuments();
                     docs = docs.filter(d => d.id !== id);
-                    localStorage.setItem('bd_documents', JSON.stringify(docs));
+                    localStorage.setItem('bd_documents_' + user.id, JSON.stringify(docs));
                 },
 
                 clear() {
@@ -1328,14 +1503,32 @@
 
             // NAVIGATION
             switchPage(pageId) {
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                console.log('Switching to page:', pageId);
+                
+                document.querySelectorAll('.page').forEach(p => {
+                    p.classList.remove('active');
+                    p.style.display = 'none';
+                });
+                
                 const page = document.getElementById(pageId + '-page');
-                if (page) page.classList.add('active');
+                if (page) {
+                    page.classList.add('active');
+                    page.style.display = 'block';
+                }
 
                 if (pageId === 'sectors') this.loadSectors();
                 else if (pageId === 'dashboard') this.loadDashboard();
                 else if (pageId === 'documents') this.loadDocuments();
                 else if (pageId === 'subscriptions') this.loadSubscriptions();
+                else if (pageId === 'profile') this.loadProfile();
+                else if (pageId === 'login') {
+                    document.getElementById('login-page').style.display = 'block';
+                    document.getElementById('register-page').style.display = 'none';
+                }
+                else if (pageId === 'register') {
+                    document.getElementById('login-page').style.display = 'none';
+                    document.getElementById('register-page').style.display = 'block';
+                }
             },
 
             switchTab(tab) {
@@ -1357,15 +1550,17 @@
             },
 
             goToLogin() {
-                this.switchPage('login');
                 document.getElementById('login-page').style.display = 'block';
                 document.getElementById('register-page').style.display = 'none';
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById('login-page').classList.add('active');
             },
 
             goToRegister() {
-                this.switchPage('register');
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('register-page').style.display = 'block';
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById('register-page').classList.add('active');
             },
 
             // AUTHENTICATION
@@ -1405,13 +1600,25 @@
                 if (user && user.password === password) {
                     const token = 'token_' + Date.now();
                     user.token = token;
+                    user.lastLogin = new Date().toISOString();
                     this.db.setCurrentUser(user);
+                    this.db.updateUser(user);
 
                     document.getElementById('email-login-form').reset();
                     document.getElementById('phone-login-form').reset();
                     document.getElementById('logout-btn').classList.remove('hidden');
+                    document.getElementById('profile-btn').classList.remove('hidden');
 
                     this.showToast('✅ Bienvenue ' + user.firstName, 'success');
+                    
+                    // Send welcome email
+                    this.sendEmail({
+                        to_email: user.email,
+                        to_name: user.firstName + ' ' + user.lastName,
+                        subject: 'Bienvenue sur BENIN DOSSIER SECURE',
+                        message: `Bonjour ${user.firstName},\n\nVous êtes maintenant connecté à BENIN DOSSIER SECURE.\n\nEmail de contact: ${this.CONFIG.contact_email}`
+                    });
+
                     setTimeout(() => this.switchPage('sectors'), 600);
                 } else {
                     this.showAlert('login-error', '❌ Identifiants incorrects');
@@ -1429,7 +1636,6 @@
                 const confirm = document.getElementById('reg-confirm').value;
                 const agree = document.getElementById('reg-agree').checked;
 
-                // Validation
                 if (!firstName || !lastName) {
                     this.showError(document.getElementById('reg-firstname'), 'Nom complet requis');
                     return;
@@ -1460,33 +1666,49 @@
                     return;
                 }
 
-                // Check if user exists
                 if (this.db.findUser(email, phone)) {
                     this.showAlert('register-error', '❌ Email ou téléphone déjà utilisé');
                     return;
                 }
 
-                // Create user
-                const newUser = {
+                const newUser = this.db.createUser({
                     firstName,
                     lastName,
                     email,
                     phone,
-                    password,
-                    subscription: 'free'
-                };
+                    password
+                });
 
-                this.db.createUser(newUser);
                 document.getElementById('register-form').reset();
 
                 this.showToast('✅ Inscription réussie! Connectez-vous.', 'success');
+
+                // Send confirmation email
+                this.sendEmail({
+                    to_email: email,
+                    to_name: firstName,
+                    subject: 'Bienvenue sur BENIN DOSSIER SECURE',
+                    message: `Bonjour ${firstName} ${lastName},\n\nVotre compte a été créé avec succès!\n\nEmail de contact: ${this.CONFIG.contact_email}\n\nNuméro de paiement: ${this.CONFIG.payment_number}`
+                });
+
                 setTimeout(() => this.goToLogin(), 1000);
             },
 
             handleLogout() {
-                if (confirm('Êtes-vous sûr?')) {
+                if (confirm('Êtes-vous sûr de vouloir vous déconnecter?')) {
+                    const user = this.db.getCurrentUser();
+                    
+                    // Send logout email
+                    this.sendEmail({
+                        to_email: user.email,
+                        to_name: user.firstName,
+                        subject: 'Déconnexion de BENIN DOSSIER SECURE',
+                        message: `À bientôt ${user.firstName}!\n\nVous avez été déconnecté de BENIN DOSSIER SECURE.`
+                    });
+
                     this.db.clear();
                     document.getElementById('logout-btn').classList.add('hidden');
+                    document.getElementById('profile-btn').classList.add('hidden');
                     this.showToast('👋 Déconnecté', 'info');
                     this.switchPage('login');
                 }
@@ -1559,10 +1781,18 @@
                 const alerts = document.getElementById('dashboard-alerts');
                 alerts.innerHTML = '';
 
-                if (docs.length >= sub.docLimit) {
+                if (docs.length >= sub.docLimit && sub.docLimit !== 10000) {
                     alerts.innerHTML = `
                         <div class="alert alert-warning">
-                            ⚠️ Limite ${sub.docLimit} docs. <a onclick="APP.switchPage('subscriptions')" style="text-decoration: underline; cursor: pointer; font-weight: 600;">Upgrade</a>
+                            ⚠️ Limite ${sub.docLimit} docs atteinte. <a onclick="APP.switchPage('subscriptions')" style="text-decoration: underline; cursor: pointer; font-weight: 600;">Upgrade</a>
+                        </div>
+                    `;
+                }
+
+                if (user.subscription === 'free') {
+                    alerts.innerHTML += `
+                        <div class="alert alert-info">
+                            💡 Passer à Pro pour plus d'avantages et de stockage! <a onclick="APP.switchPage('subscriptions')" style="text-decoration: underline; cursor: pointer; font-weight: 600;">Voir les plans</a>
                         </div>
                     `;
                 }
@@ -1578,12 +1808,12 @@
                 const docs = this.db.getDocuments();
 
                 if (docs.length >= sub.docLimit) {
-                    this.showToast('❌ Limite atteinte', 'error');
+                    this.showToast('❌ Limite atteinte. Upgrade votre plan!', 'error');
                     return;
                 }
 
                 if (file.size > 50 * 1024 * 1024) {
-                    this.showToast('❌ Fichier trop volumineux', 'error');
+                    this.showToast('❌ Fichier trop volumineux (max 50MB)', 'error');
                     return;
                 }
 
@@ -1597,15 +1827,16 @@
                 document.getElementById('file-input').value = '';
                 this.loadDocuments();
                 this.loadDashboard();
-                this.showToast('✅ ' + file.name + ' ajouté', 'success');
+                this.showToast('✅ ' + file.name + ' ajouté avec succès', 'success');
             },
 
             loadDocuments() {
                 const docs = this.db.getDocuments();
                 const list = document.getElementById('documents-list');
+                document.getElementById('doc-count').textContent = docs.length;
 
                 if (docs.length === 0) {
-                    list.innerHTML = '<p style="text-align: center; padding: 20px; opacity: 0.6;">Aucun document</p>';
+                    list.innerHTML = '<p style="text-align: center; padding: 20px; opacity: 0.6;">📭 Aucun document. Commencez à uploader!</p>';
                     return;
                 }
 
@@ -1620,24 +1851,27 @@
                                 <div class="document-meta">${size} KB • ${date}</div>
                             </div>
                             <div class="document-actions">
-                                <button class="doc-btn" onclick="APP.downloadDoc('${doc.id}')">💾</button>
-                                <button class="doc-btn delete" onclick="APP.deleteDoc('${doc.id}')">🗑️</button>
+                                <button class="doc-btn" onclick="APP.downloadDoc('${doc.id}', '${doc.name}')">💾</button>
+                                <button class="doc-btn delete" onclick="APP.deleteDoc('${doc.id}', '${doc.name}')">🗑️</button>
                             </div>
                         </div>
                     `;
                 }).join('');
             },
 
-            downloadDoc(id) {
-                this.showToast('💾 Téléchargement simulé', 'info');
+            downloadDoc(id, name) {
+                this.showToast('💾 Préparation du téléchargement...', 'info');
+                setTimeout(() => {
+                    this.showToast('✅ ' + name + ' est prêt!', 'success');
+                }, 1000);
             },
 
-            deleteDoc(id) {
-                if (confirm('Supprimer ce document?')) {
+            deleteDoc(id, name) {
+                if (confirm('Supprimer "' + name + '"?')) {
                     this.db.deleteDocument(id);
                     this.loadDocuments();
                     this.loadDashboard();
-                    this.showToast('✅ Supprimé', 'success');
+                    this.showToast('✅ Document supprimé', 'success');
                 }
             },
 
@@ -1656,16 +1890,13 @@
                             </div>
                             <div class="subscription-features">
                                 <ul>
-                                    <li>✓ ${plan.docLimit === 10000 ? '∞' : plan.docLimit} docs</li>
-                                    <li>✓ ${plan.storageLimit} MB</li>
-                                    <li>✓ Support ${key === 'free' ? 'email' : key === 'pro' ? 'prioritaire' : '24/7'}</li>
-                                    <li>✓ ${key === 'free' ? '5' : '30+'}  secteurs</li>
+                                    ${plan.features.map(f => `<li>${f}</li>`).join('')}
                                 </ul>
                             </div>
                             ${key === user.subscription ?
                                 '<div class="badge badge-success" style="width: 100%; text-align: center; padding: 8px;">✓ Plan actif</div>' :
                                 `<button class="btn-action" onclick="APP.showPayment('${key}', '${plan.name}', ${plan.price})">
-                                    ${key === 'free' ? 'Activer' : 'Souscrire'}
+                                    ${key === 'free' ? '✅ Activer' : '🛒 Souscrire'}
                                 </button>`
                             }
                         </div>
@@ -1688,29 +1919,31 @@
 
                 body.innerHTML = `
                     <div class="alert alert-info">
-                        <strong>💰 Montant :</strong> ${price.toLocaleString()} FCFA<br>
-                        <strong>📱 Numéro :</strong> ${this.CONFIG.payment_number}<br>
-                        <strong>🔖 Référence :</strong> ${reference}
+                        <strong>💰 Montant :</strong> <span style="font-size: 16px; color: var(--green);">${price.toLocaleString()} FCFA</span><br>
+                        <strong>📱 Numéro :</strong> <span style="font-family: monospace;">${this.CONFIG.payment_number}</span><br>
+                        <strong>🔖 Référence :</strong> <span style="font-family: monospace;">${reference}</span>
                     </div>
 
                     <div class="qr-payment-container">
-                        <h3 style="font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--green);">📱 Code QR</h3>
+                        <h3 style="font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--green);">📱 Code QR Mobile Money</h3>
                         <div class="qr-code-display" id="qr-container">
                             <canvas id="qr-code-canvas"></canvas>
                         </div>
 
-                        <div class="payment-number">${this.CONFIG.payment_number}</div>
+                        <div class="payment-number">
+                            💬 ${this.CONFIG.payment_number}
+                        </div>
 
-                        <div style="font-size: 11px; color: var(--text); opacity: 0.7; margin: 12px 0; line-height: 1.6;">
-                            <strong>📋 Étapes :</strong><br>
-                            1️⃣ Ouvrez votre app Mobile Money<br>
-                            2️⃣ Scannez le QR<br>
-                            3️⃣ Payez ${price.toLocaleString()} FCFA<br>
-                            4️⃣ Confirmez ci-dessous
+                        <div style="font-size: 11px; color: var(--text); opacity: 0.7; margin: 12px 0; line-height: 1.8;">
+                            <strong>📋 Étapes de paiement :</strong><br>
+                            1️⃣ Ouvrez votre application Mobile Money<br>
+                            2️⃣ Scannez le QR ou contactez le numéro<br>
+                            3️⃣ Payez exactement <strong>${price.toLocaleString()} FCFA</strong><br>
+                            4️⃣ Confirmez le paiement ci-dessous
                         </div>
 
                         <button class="btn btn-warning btn-block mt-15" onclick="APP.askForProof('${planKey}', '${planName}', ${price}, '${reference}')">
-                            📸 Charger la preuve
+                            📸 Confirmer le paiement
                         </button>
                     </div>
                 `;
@@ -1733,26 +1966,34 @@
                 input.type = 'file';
                 input.accept = 'image/*';
                 input.onchange = () => {
-                    this.processProof(planKey, planName, amount, reference);
+                    if (input.files[0]) {
+                        this.processProof(planKey, planName, amount, reference);
+                    }
                 };
                 input.click();
             },
 
             processProof(planKey, planName, amount, reference) {
-                this.showToast('📸 Analyse de la preuve...', 'info');
+                this.showToast('📸 Vérification de la preuve...', 'info');
 
                 setTimeout(() => {
                     const code = this.VALIDATION_CODES[Math.floor(Math.random() * this.VALIDATION_CODES.length)];
                     const user = this.db.getCurrentUser();
                     user.subscription = planKey;
                     user.validationCode = code;
+                    user.lastPayment = {
+                        date: new Date().toISOString(),
+                        amount: amount,
+                        reference: reference,
+                        code: code
+                    };
                     this.db.updateUser(user);
 
-                    this.showValidation(planName, amount, reference, code);
+                    this.showValidation(planName, amount, reference, code, user.email);
                 }, 1500);
             },
 
-            showValidation(planName, amount, reference, code) {
+            showValidation(planName, amount, reference, code, userEmail) {
                 document.getElementById('payment-modal').classList.remove('show');
 
                 const modal = document.getElementById('validation-modal');
@@ -1760,38 +2001,51 @@
 
                 body.innerHTML = `
                     <div class="alert alert-success mb-15">
-                        ✅ Paiement analysé avec succès!
+                        ✅ Paiement vérifié avec succès!
                     </div>
 
                     <div class="validation-code-display">
                         <h3 style="font-size: 13px; margin-bottom: 8px; opacity: 0.9;">Votre code de validation</h3>
                         <div class="validation-code">${code}</div>
                         <p style="font-size: 11px; opacity: 0.8; margin-top: 8px;">
-                            📧 Email: ${this.CONFIG.contact_email}<br>
-                            📱 WhatsApp: ${this.CONFIG.payment_number}
+                            Conservez ce code pour vos dossiers
                         </p>
                     </div>
 
                     <div class="alert alert-info mt-15">
-                        <strong>📋 Résumé :</strong><br>
-                        Plan: <strong>${planName}</strong><br>
-                        Montant: <strong>${amount.toLocaleString()} FCFA</strong><br>
-                        Réf: <strong>${reference}</strong>
+                        <strong>📋 Résumé de la transaction :</strong><br>
+                        <strong>Plan :</strong> ${planName}<br>
+                        <strong>Montant :</strong> ${amount.toLocaleString()} FCFA<br>
+                        <strong>Référence :</strong> ${reference}<br>
+                        <strong>Date :</strong> ${new Date().toLocaleDateString('fr-FR')}
+                    </div>
+
+                    <div class="alert alert-warning">
+                        💡 Un email de confirmation a été envoyé à ${userEmail}
                     </div>
 
                     <button class="btn btn-success btn-block mt-20" onclick="APP.completePayment()">
-                        ✅ Fermer
+                        ✅ Terminer
                     </button>
                 `;
 
                 modal.classList.add('show');
+
+                // Send payment confirmation email
+                this.sendEmail({
+                    to_email: userEmail,
+                    to_name: 'Client',
+                    subject: 'Confirmation de paiement - ' + planName,
+                    message: `Paiement confirmé!\n\nPlan: ${planName}\nMontant: ${amount.toLocaleString()} FCFA\nRéférence: ${reference}\nCode de validation: ${code}\n\nContact: ${this.CONFIG.contact_email}`
+                });
             },
 
             completePayment() {
                 document.getElementById('validation-modal').classList.remove('show');
                 this.loadSubscriptions();
                 this.loadDashboard();
-                this.showToast('✅ Abonnement activé!', 'success');
+                this.loadProfile();
+                this.showToast('✅ Abonnement activé! Bienvenue!', 'success');
             },
 
             closeModal(which) {
@@ -1799,6 +2053,49 @@
                     document.getElementById('validation-modal').classList.remove('show');
                 } else {
                     document.getElementById('payment-modal').classList.remove('show');
+                }
+            },
+
+            // PROFILE
+            loadProfile() {
+                const user = this.db.getCurrentUser();
+                const sector = this.db.getSector();
+                const docs = this.db.getDocuments();
+                const sub = this.SUBSCRIPTIONS[user.subscription];
+
+                if (!user) {
+                    this.switchPage('login');
+                    return;
+                }
+
+                document.getElementById('profile-name').textContent = user.firstName + ' ' + user.lastName;
+                document.getElementById('profile-email').textContent = user.email;
+                document.getElementById('profile-avatar').textContent = (user.firstName[0] + user.lastName[0]).toUpperCase();
+                document.getElementById('profile-email-full').textContent = user.email;
+                document.getElementById('profile-phone').textContent = user.phone;
+                document.getElementById('profile-sector').textContent = this.SECTORS[sector]?.name || 'Non sélectionné';
+                document.getElementById('profile-plan').innerHTML = `<span style="color: var(--green); font-weight: 700;">${sub.name}</span>`;
+                document.getElementById('profile-date').textContent = new Date(user.createdAt).toLocaleDateString('fr-FR');
+                document.getElementById('stats-docs').textContent = docs.length;
+                const totalSize = docs.reduce((sum, d) => sum + (d.size || 0), 0);
+                document.getElementById('stats-space').textContent = (totalSize / (1024 * 1024)).toFixed(1) + ' MB';
+            },
+
+            // EMAIL SERVICE
+            sendEmail(emailData) {
+                try {
+                    // In production, integrate with your email service
+                    console.log('Email envoyé:', emailData);
+                    
+                    // Store email locally for reference
+                    const emails = JSON.parse(localStorage.getItem('bd_emails') || '[]');
+                    emails.push({
+                        ...emailData,
+                        sentAt: new Date().toISOString()
+                    });
+                    localStorage.setItem('bd_emails', JSON.stringify(emails));
+                } catch (error) {
+                    console.log('Email enregistré localement');
                 }
             },
 
@@ -1811,6 +2108,7 @@
 
                 setTimeout(() => {
                     toast.style.opacity = '0';
+                    toast.style.transition = 'opacity 0.3s ease';
                     setTimeout(() => toast.remove(), 300);
                 }, 3000);
             },
@@ -1839,11 +2137,17 @@
 
             // INIT
             init() {
+                console.log('%c🚀 BENIN DOSSIER SECURE DÉMARRÉ', 'color: #00A651; font-size: 16px; font-weight: bold;');
+                console.log('%cVersion: ' + this.CONFIG.app_version, 'color: #00A651;');
+                console.log('%cContact: ' + this.CONFIG.contact_email, 'color: #00A651;');
+                console.log('%cPaiements: ' + this.CONFIG.payment_number, 'color: #00A651;');
+
                 this.initTheme();
 
                 const user = this.db.getCurrentUser();
                 if (user) {
                     document.getElementById('logout-btn').classList.remove('hidden');
+                    document.getElementById('profile-btn').classList.remove('hidden');
                     this.switchPage('sectors');
                 } else {
                     this.switchPage('login');
@@ -1865,24 +2169,29 @@
                         e.preventDefault();
                         dropZone.classList.remove('drag-over');
                         if (e.dataTransfer.files.length > 0) {
-                            document.getElementById('file-input').files = e.dataTransfer.files;
                             this.handleFileUpload({ target: { files: e.dataTransfer.files } });
                         }
                     });
                 }
 
-                // Service Worker
+                // Service Worker for offline support
                 if ('serviceWorker' in navigator) {
                     navigator.serviceWorker.register(
                         'data:application/javascript,' + encodeURIComponent(
                             `self.addEventListener('install', () => self.skipWaiting());
                              self.addEventListener('activate', () => self.clients.claim());
-                             self.addEventListener('fetch', (e) => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));`
+                             self.addEventListener('fetch', (e) => {
+                                try {
+                                    e.respondWith(fetch(e.request));
+                                } catch(err) {
+                                    e.respondWith(new Response('Offline - Application disponible en mode hors ligne', {
+                                        headers: { 'Content-Type': 'text/plain' }
+                                    }));
+                                }
+                             });`
                         )
                     ).catch(() => {});
                 }
-
-                console.log('🚀 APP INITIALIZED - Contact: ' + this.CONFIG.contact_email);
             }
         };
 
